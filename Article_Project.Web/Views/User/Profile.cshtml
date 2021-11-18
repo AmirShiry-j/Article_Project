@@ -1,0 +1,228 @@
+﻿@model Tuple<ProfileDto, IEnumerable<ShortDisplayPostDto>>
+
+@inject IUnitOfWork _unitOfWork
+@inject UserManager<User> _userManager
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService _authorizeService
+
+@{
+    ViewData["Title"] = "پروفایل ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ProfileDto userProfile = Model.Item1 as ProfileDto;
+    List<ShortDisplayPostDto> posts = Model.Item2 as List<ShortDisplayPostDto>;
+
+    var Followers = ViewData["Followers"] as IEnumerable<Follow>;
+
+}
+
+
+
+<div class="profile-div">
+    <section class="d-flex justify-content-start">
+        <div class="profile-img-div">
+            @{
+                if (userProfile.ImageProfileName != null)
+                {
+                    <img class="profile-img rounded-circle" src="~/images/ImgProfile/@userProfile.ImageProfileName" alt="@userProfile.NameShow" />
+                }
+                else
+                {
+                    <img class="profile-img rounded-circle" src="~/images/Userimg.png" />
+
+                }
+            }
+        </div>
+        <div class="d-flex justify-content-start col pt-4 px-0">
+            <div class="text-center col-4 col-sm-3">
+                <h6 class="count-post-h6">@userProfile.CountPosts</h6>
+                <h5 class="post-h5">پست ها</h5>
+            </div>
+
+            <div class="text-center col-4 col-sm-3">
+                <div class="d-flex justify-content-center">
+                    <a asp-action="Followers" asp-route-UserName="@userProfile.UserName" class="text-decoration-none text-reset">
+                        <h6 class="count-follower-h6">@userProfile.CountFollowers</h6>
+                        <h5 class="follower-h5">دنبال کننده ها</h5>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center col-4 col-sm-3">
+                <div class="d-flex justify-content-center">
+                    <a asp-action="Followings" asp-route-UserName="@userProfile.UserName" class="text-decoration-none text-reset">
+                        <h6 class="count-following-h6">@userProfile.CountFollowing</h6>
+                        <h5 class="following-h5">دنبال شونده ها</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <h3 class="name-show-h3">@userProfile.NameShow</h3>
+    <div class="d-flex align-items-center">
+        <div class="mr-3 mt-0">
+            <h4 class="user-name-h4">@userProfile.UserName@@</h4>
+        </div>
+        <div>
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userActive = _userManager.GetUserAsync(User).Result;
+
+                    if (_authorizeService.AuthorizeAsync(User, userProfile.Id, "IsIdForUser").Result.Succeeded == false)
+                    {
+
+                        if (Followers.Any(p => p.UserId == userActive.Id))
+                        {
+                            <div class="follows-div" UserId="@userProfile.Id">
+                                <button class="following-btn btn border "><i class="fa fa-check"></i>&nbsp; دنبال می کنید</button>
+                                <button class="follow-btn btn btn-secondary border-0 d-none"><i class="fa fa-plus"></i>&nbsp; دنبال کردن</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="follows-div" UserId="@userProfile.Id">
+                                <button class="follow-btn btn btn-secondary border-0"><i class="fa fa-plus"></i>&nbsp; دنبال کردن</button>
+                                <button class="following-btn btn border d-none"><i class="fa fa-check"></i>&nbsp; دنبال می کنید</button>
+                            </div>
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    <div class="follows-div" UserId="@userProfile.Id">
+                        <button class="follow-btn btn btn-secondary border-0"><i class="fa fa-plus"></i>&nbsp; دنبال کردن</button>
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+    <p class="biography-p">@userProfile.Biography</p>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+
+            if (_authorizeService.AuthorizeAsync(User, userProfile.Id, "IsIdForUser").Result.Succeeded == true)
+            {
+                <div class="btns-mypro-div">
+                    <a asp-controller="Account" asp-action="LogOut" class="btn btn-info"><i class="fa fa-sign-out text-white"></i>&nbsp; خروج از حساب</a>
+                    <a asp-controller="Like" asp-action="GetYours" class="btn btn-info"><i class="fa fa-heart text-danger"></i>&nbsp; علاقه مندی ها </a>
+                    <a asp-controller="Bookmark" asp-action="GetYours" class="btn btn-info "><i class="fa fa-bookmark text-dark "></i>&nbsp; پست های سیو شده</a>
+                    <a asp-controller="Account" asp-action="Edit" class="btn btn-info mr-3"><i class="fa fa-id-badge text-warning"></i>&nbsp; ویرایش پروفایل</a>
+                    @if (_authorizeService.AuthorizeAsync(User, "AdminUsers").Result.Succeeded ||
+                      _authorizeService.AuthorizeAsync(User, "ManagerUsers").Result.Succeeded)
+                    {
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="btn btn-outline-dark mr-3"><i class="fa fa-star text-warning "></i>&nbsp; پنل ادمین</a>
+
+                    }
+                </div>
+            }
+
+        }
+    }
+</div>
+
+@* End Profile *@
+
+<main class="px-4 pb-4 pt-4">
+    <div class="title-posts-div d-flex align-items-center">
+        @if (_authorizeService.AuthorizeAsync(User, userProfile.Id, "IsIdForUser").Result.Succeeded)
+        {
+
+            <span>پست های شما</span>
+
+        }
+        else
+        {
+            <span>پست های :&nbsp;&nbsp; @userProfile.NameShow</span>
+        }
+        <hr class="bg-warning col ml-3" />
+    </div>
+    @{
+        if (posts != null && posts.Count > 0)
+        {
+
+            <partial name="_ShortDispalyPosts" model="@posts" />
+
+        }
+        else
+        {
+
+            <div class="not-div">
+                @{
+                    if (_authorizeService.AuthorizeAsync(User, userProfile.Id, "IsIdForUser").Result.Succeeded)
+                    {
+                        <h6 class="not-h6">
+                            شما تاکنون پستی ننوشته اید
+                        </h6>
+                    }
+                    else
+                    {
+                        <h6 class="not-h6">
+                            این کاربر تاکنون پستی ننوشته است
+                        </h6>
+                    }
+                }
+
+            </div>
+
+
+        }
+
+
+    }
+
+</main>
+
+
+
+
+@if (User.Identity.IsAuthenticated == false)
+{
+
+    <partial name="_ModalAccount" />
+
+}
+
+
+@section Meta{
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="صفحه پروفایل کاربر در سایت وبلاگر">
+    <meta name="keyword" content="حساب,کاربر,پروفایل,مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر ">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+}
+@section Css{
+
+
+    <link rel="stylesheet" href="~/css/Pages/Profile.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Partials/_DisplayPosts.css" type="text/css" />
+
+    @if (User.Identity.IsAuthenticated == false)
+    {
+
+        <link rel="stylesheet" href="~/css/Partials/_ModalAccount.css" type="text/css" />
+
+    }
+}
+
+@section Scripts{
+
+    <script src="~/js/Pages/Profile.js"></script>
+
+    <script src="~/js/Partials/_DisplyPosts.js"></script>
+
+    @if (User.Identity.IsAuthenticated == false)
+    {
+
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/popper.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+
+    }
+}

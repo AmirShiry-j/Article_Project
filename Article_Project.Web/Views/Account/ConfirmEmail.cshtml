@@ -1,0 +1,32 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "تایید حساب کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<main class="d-flex justify-content-center">
+    <div class="error-div col-11 col-sm-10 col-md-8 col-lg-7">
+        <div class="text-error-div alert-info p-5 text-center">
+            لینکی جهت تایید حساب کاربری شما در سایت وبلاگر به ایمیل '@Model' .ارسال شد
+        </div>
+        <h6 class="help-h6 text-center">لطفا برای تایید کامل حساب کاربری خود بر روی لینک ارسالی به ایمیل خود کلیک کنید</h6>
+    </div>
+</main>
+
+@section Meta{
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="تایید حساب کاربری در سایت وبلاگر">
+    <meta name="keyword" content=" تایید حساب کاربری , مقاله نویسی , وبلاگ نویسی , وبلاگر ,ارور,پیدا نکردن">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="nofollow, noindex">
+}
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/Error.css" type="text/css" />
+
+}
+

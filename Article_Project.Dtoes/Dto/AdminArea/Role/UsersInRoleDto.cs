@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Article_Project.Dtoes.Dto.AdminArea.Role
+{
+    public class UsersInRoleDto
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string NameShow { get; set; }
+        public string Email { get; set; }
+        public string Roles { get; set; }
+    }
+}

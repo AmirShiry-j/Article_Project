@@ -1,0 +1,280 @@
+﻿@model Post
+
+@inject IAuthorizationService _authorizationService
+
+@inject UserManager<User> _userManager
+@inject IUnitOfWork _unitOfWork
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    Post post = Model;
+    User author = post.User;
+    var userId = _userManager.GetUserId(User);
+
+    bool HasLoginedUser = User.Identity.IsAuthenticated;
+
+    ServicePost servicePost = new ServicePost(_unitOfWork);
+
+}
+
+
+
+<div class="post-div">
+    <article>
+        @* مشخصات نویسنده *@
+        <section class="author-section d-flex">
+            <section class="">
+                <a asp-controller="User" asp-action="Profile" asp-route-UserName="@author.UserName">
+                    @if (author.ImageProfileName != null)
+                    {
+                        <img class="author-img rounded-circle" src="~/images/ImgProfile/@author.ImageProfileName" alt="@author.NameShow" />
+                    }
+                    else
+                    {
+                        <img class="author-img rounded-circle" src="~/images/Userimg.png" />
+                    }
+                </a>
+            </section>
+            <section class="px-2 py-1 ">
+                <section class="d-flex">
+                    <section class="d-flex align-items-center">
+                        <a class="text-reset text-decoration-none" asp-controller="User" asp-action="Profile" asp-route-UserName="@author.UserName">
+                            <h5 class="author-h5 mt-1">@author.NameShow</h5>
+                        </a>
+                    </section>
+                    <section class="d-flex">
+                        <div class="follows-div">
+                            @{
+                                if (HasLoginedUser)
+                                {
+
+                                    if (_authorizationService.AuthorizeAsync(User, author.Id, "IsIdForUser").Result.Succeeded)
+                                    {
+
+                                        <button class="btn btn-warning delete-btn">حذف پست</button>
+
+                                    }
+                                    else
+                                    {
+
+                                        if (_unitOfWork.FollowRepository.GetAllAsync(f => f.UserId == userId && f.FollowTo == author.Id, null).Result.Any())
+                                        {
+
+                                            <button class="following-btn btn border rounded-pill"><i class="fa fa-check"></i>&nbsp; دنبال می کنید</button>
+                                            <button class="follow-btn btn btn-secondary border-0 rounded-pill d-none"><i class="fa fa-plus"></i>&nbsp; دنبال کردن</button>
+                                        }
+                                        else
+                                        {
+
+                                            <button class="follow-btn btn btn-secondary border-0 rounded-pill"><i class="fa fa-plus"></i>&nbsp; دنبال کردن</button>
+                                            <button class="following-btn btn border rounded-pill d-none"><i class="fa fa-check"></i>&nbsp; دنبال می کنید</button>
+                                        }
+
+                                        //
+                                        if (_authorizationService.AuthorizeAsync(User, "AdminUsers").Result.Succeeded ||
+                                            _authorizationService.AuthorizeAsync(User, "ManagerUsers").Result.Succeeded)
+                                        {
+
+                                            <button class="btn btn-warning delete-btn">حذف پست</button>
+                                        }
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    <button class="follow-btn btn btn-secondary border-0 rounded-pill"><i class="fa fa-plus"></i>&nbsp; دنبال کردن</button>
+                                }
+                            }
+                        </div>
+                    </section>
+                </section>
+
+                <h6 class="time-create-h6 mt-2">@servicePost.GetCurrentTime(post.TimeCreate)</h6>
+            </section>
+        </section>
+        @* بدنه پست *@
+        <h1 class="title-h1 mt-5 mt-3">@post.Title</h1>
+
+        @{
+
+            int NumTxt = 0;
+            int NumImg = 0;
+            string[] Orders = post.Orders.Split("#*$", StringSplitOptions.RemoveEmptyEntries);
+            string[] Texts = post.Texts.Split("#*$", StringSplitOptions.RemoveEmptyEntries);
+            string[] ImageNames = post.ImageNames.Split("#*$", StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var item in Orders)
+            {
+                if (item.Contains("t"))
+                {
+                    <p class="text-p my-4 text-break">@Texts[NumTxt].ToString()</p>
+
+                    NumTxt++;
+                }
+                else if (item.Contains("p"))
+                {
+                    <img class="image-img my-5" src="~/images/ImgPost/@ImageNames[NumImg].ToString()" alt="@post.Title" />
+
+                    NumImg++;
+                }
+
+            }
+        }
+    </article>
+    @* کلمات کلیدی *@
+    @{
+        <h6 class="tags-h6 mt-5 mb-4">کلمات کلیدی :</h6>
+
+        <a asp-action="Subject" asp-route-Subject="@post.Subject" class="text-decoration-none text-reset">
+            <span class="badge subject-span">@post.Subject</span>
+        </a>
+
+        if (post.Tags != null)
+        {
+            string[] Tags = post.Tags.Split("-", StringSplitOptions.RemoveEmptyEntries);
+            foreach (var tag in Tags)
+            {
+                <a asp-action="Search" asp-route-Tag="@tag" class="text-decoration-none text-reset">
+                    <span class="badge tag-span">@tag</span>
+                </a>
+            }
+        }
+    }
+    @* Bookmark *@
+    <div class="property-div d-flex justify-content-around">
+        <div class="bookmark-div">
+            @{
+                if (HasLoginedUser)
+                {
+
+                    if (post.Bookmarks.Any(p => p.UserId == userId))
+                    {
+                        <i class="fa fa-bookmark"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-bookmark-o"></i>
+
+                    }
+
+                }
+                else
+                {
+                    <i class="fa fa-bookmark-o"></i>
+                }
+            }
+        </div>
+        @* End Bookmark *@
+
+        @* Like *@
+        <div class="like-div">
+            @{
+                int countLikes = post.Likes.Count;
+
+                if (HasLoginedUser)
+                {
+
+                    if (post.Likes.Any(p => p.UserId == userId))
+                    {
+                        <i class="fa fa-heart text-danger"></i> <span class="count-like-span">@countLikes</span>
+                    }
+                    else
+                    {
+                        <i class="fa fa-heart-o"></i> <span class="count-like-span">@countLikes</span>
+                    }
+                }
+                else
+                {
+                    <i class="fa fa-heart-o"></i> <span class="count-like-span">@countLikes</span>
+                }
+            }
+        </div>
+        @* End Like *@
+
+        <div class="com-div"><i class="fa fa-comment-o"></i> @ViewBag.CountComments </div>
+        <div class="view-div"><i class="fa fa-eye"></i> @post.Views</div>
+
+    </div>
+    <hr class="bg-warning mb-5" />
+
+    <!--Comments-->
+
+    @await Component.InvokeAsync("ShowCommentsOfPostComponent", post.PostId)
+
+
+</div>
+
+
+
+<!-- Button trigger modal -->
+<button type="button" id="modal-delete-post-btn" class="btn btn-primary d-none" data-toggle="modal" data-target="#modal-delete-post-div">
+    Launch demo modal
+</button>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="modal-delete-post-div" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">توجه </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-4">
+                <p class="">آیا از حذف کردن این پست مطمئن هستید؟</p>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center ">
+                    <div>
+                        <btn class="btn border rounded-pill close-btn" data-dismiss="modal">خیر</btn>
+
+                    </div>
+                    <div>
+                        <a class="btn btn-info border-0 rounded-pill delete-a" asp-controller="Post" asp-action="Delete" asp-route-PostId="@Model.PostId">بله مطمئنم <i class="fa fa-trash text-light"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<partial name="_ModalAccount" />
+
+
+@section Meta{
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="@post.Title">
+    <meta name="keyword" content="مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر ,پست,,مقاله,@post.Subject">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+}
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/Show.css" type="text/css" />
+
+
+    <link rel="stylesheet" href="~/css/Partials/_ModalAccount.css" type="text/css" />
+
+}
+@section Scripts{
+    <script src="~/js/Pages/Show.js"></script>
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+}

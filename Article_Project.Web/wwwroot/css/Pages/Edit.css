@@ -1,0 +1,99 @@
+﻿
+
+body {
+    font-family: vazir;
+    background-color: #f8f8f8;
+    direction:rtl;
+}
+
+.main-container-div {
+    padding: 30px;
+}
+
+.inner-container-div {
+    padding:10px;
+}
+.profile-div {
+    padding: 25px;
+    background-color: white;
+    border: 1px solid #dfdfdf;
+    border-radius:3px;
+}
+
+.profile-sec1{
+    margin:10px 10px;
+}
+.profile-sec1 .img-pro{
+
+    height:150px;
+    width:150px;
+    border-radius:3px;
+
+}
+
+.profile-sec2 {
+    margin: 10px;
+    
+}
+.name-show-h2 {
+    font-size: 20px;
+    color: #212529;
+    font-family: 'Adobe Kaiti Std';
+    font-weight: bolder;
+    margin-top:14px;
+}
+.user-name-h3 {
+    font-size: 16px;
+    color: #212529;
+    margin-top: 14px;
+    font-family: 'Adobe Kaiti Std';
+}
+.change-pro-btn {
+    margin-top: 14px;
+    width:130px;
+    font-size:12px;
+}
+@media (min-width:0px) {
+
+    .profile-sec2{
+        text-align:center;
+    }
+    .name-show-h2 {
+        text-align: center;
+    }
+    .user-name-h3 {
+        text-align: center;
+    }
+}
+@media (min-width:768px)
+{
+
+    .profile-sec2 {
+        text-align: right;
+    }
+    .name-show-h2 {
+        text-align: right;
+    }
+    .user-name-h3 {
+        text-align: right;
+    }
+}
+/*Body*/
+.body-div h5 {
+    font-size:18px;
+    margin-top:10px;
+
+
+}
+#change-password-div{
+    height:100%;
+    width:100%;
+}
+span{
+    font-size:14px;
+}
+[type=submit] {
+    font-size: 13px;
+}
+/*End Body*/
+

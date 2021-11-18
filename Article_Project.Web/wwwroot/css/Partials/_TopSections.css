@@ -1,0 +1,73 @@
+﻿
+/* Nav */
+.asli-nav {
+    height: 50px !important;
+    background-color: white;
+    border-bottom: 2px solid #1592a5;
+
+    padding:25px 10px 25px 5px !important;
+}
+
+.asli-nav a, .asli-nav a:hover {
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.asli-nav .item-div {
+    display: flex;
+    align-items: center;
+}
+.asli-nav .item-2-div{
+    display: flex;
+    align-items: center;
+}
+.asli-nav .nav-sec-right {
+
+}
+.asli-nav .nav-sec-left{
+
+}
+
+.asli-nav .nav-sec-right .item-div {
+    margin-left: 20px !important;
+    
+}
+.asli-nav .nav-sec-left .item-div {
+    margin-right: 15px !important;
+}
+.asli-nav .nav-sec-left .item-2-div {
+    margin-right: 0px !important;
+}
+.asli-nav i {
+    font-size: 14px ;
+    
+}
+/* End Nav */
+
+/* Menu Nav */
+.menu-nav {
+    height: 40px;
+    background-color: #00c5bc;
+    padding: 0;
+    
+}
+nav {
+    overflow: auto;
+}
+.menu-nav a, .menu-nav a:hover {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.menu-nav .inner-div {
+    padding: 0;
+}
+.menu-nav .item-menu-div {
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+}
+/* End Menu Nav */

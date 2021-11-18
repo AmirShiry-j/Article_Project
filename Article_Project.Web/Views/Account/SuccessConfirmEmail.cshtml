@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "تایید حساب کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<main class="d-flex justify-content-center">
+    <div class="error-div col-11 col-sm-10 col-md-8 col-lg-7">
+        <div class="text-error-div alert-success p-5 text-center">
+            تبریک حساب کاربری شما با موفقیت تایید شد. شما هم اکنون کاربر رسمی این سایت هستید
+        </div>
+        <h6 class="help-h6 text-center">برای رفتن به صفحه اصلی سایت وبلاگر روی دکمه زیر کلیک نمایید.</h6>
+        <a asp-controller="Home" asp-action="Index" class="main-page-a btn btn-info">
+            صفحه اصلی سایت وبلاگر
+        </a>
+    </div>
+</main>
+
+@section Meta{
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="تایید حساب کاربری در سایت وبلاگر">
+    <meta name="keyword" content=" تایید حساب کاربری , مقاله نویسی , وبلاگ نویسی , وبلاگر ,ارور,پیدا نکردن">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="nofollow, noindex">
+}
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/Error.css" type="text/css" />
+
+}
+

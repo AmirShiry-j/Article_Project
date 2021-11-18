@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Article_Project.Dtoes.Dto.AdminArea.Role.RoleListDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>نقش ها</h1>
+
+<p>
+    <a asp-action="Create">اضافه کردن نقش جدید</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                <i class="fa fa-male text-info"></i>
+                @Html.DisplayNameFor(model => model.CountUsers)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.CountUsers)
+                </td>
+                <td>
+                    @if (item.Name != "Admin" && item.Name != "Manager")
+                    {
+                        @Html.ActionLink("Delete", "Delete", "Role", new { Id = item.Id, area = "Admin" })
+                    }
+                    @Html.ActionLink("List Users", "UsersInRole", "Role", new { Id = item.Id, area = "Admin" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

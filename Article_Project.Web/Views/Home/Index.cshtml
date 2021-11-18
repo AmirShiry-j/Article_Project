@@ -1,0 +1,266 @@
+﻿@inject DataBaseContext _Db
+@inject UserManager<User> _userManager
+@using Article_Project.Web.Tools
+
+@{
+    ViewData["Title"] = "وبلاگر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ServiceCommon serviceCommon = new ServiceCommon();
+
+    List<ShortDisplayPostDto> postsThisPage = ViewData["PostsPage"] as List<ShortDisplayPostDto>;
+
+    List<ShortDisplayPostDto> AllPosts = _Db.Posts.Select(p => new ShortDisplayPostDto
+    {
+        PostId = p.PostId,
+        ImageName = serviceCommon.GetNameFirstImage(p.ImageNames),
+        Title = p.Title,
+        Subject = p.Subject,
+        Description = serviceCommon.GetDescription(p.Texts),
+        UserId = p.UserId,
+        TimeCreate = p.TimeCreate
+
+    }).ToList();
+
+}
+
+<div class="landing-div">
+    <h1>با وبلاگر می تونی دوران جدید وبلاگ نویسی رو شروع کنی</h1>
+    <h2>نوشته هاتو با بقیه به اشتراک بذار</h2>
+
+    <form class="search-form" asp-controller="Post" asp-action="Search">
+        <div class="input-group search-div">
+            <input name="Tag" type="text" autocomplete="off" id="search-btn" class="form-control text-center tag-input" required placeholder="دنبال چه مقاله هایی میگردی؟">
+            <div class="input-group-prepend text-center btn-search-div">
+                <span class="input-group-span text-center" id="inputGroupPrepend"><i class="fa fa-search"></i> </span>
+            </div>
+        </div>
+    </form>
+    <div class="d-flex px-5 justify-content-center mt-5">
+        <div class="col-4 text-center d-none d-md-block ">
+            <i class="fa fa-lg fa-user d-block text-center"></i>
+            <h4 class="text-center">
+                @_Db.Users.ToList().Count کاربر
+            </h4>
+        </div>
+        <div class="col-4 text-center d-none d-sm-block ">
+            <i class="fa fa-lg fa-mortar-board d-block text-center"></i>
+            <h4 class="text-center">
+                @{
+                    List<string> authorsId = new List<string>();
+
+                    for (int i = 0; i < AllPosts.Count; i++)
+                    {
+                        if (!authorsId.Contains(AllPosts[i].UserId))
+                        {
+                            authorsId.Add(AllPosts[i].UserId);
+                        }
+                    }
+
+                }
+                @authorsId.Count نویسنده
+            </h4>
+        </div>
+        <div class="col-4 text-center ">
+            <i class="fa fa-lg fa-pencil d-block text-center"></i>
+            <h4 class="text-center">
+
+                @AllPosts.Count مقاله
+            </h4>
+        </div>
+
+    </div>
+</div>
+
+@* Menu Nav *@
+
+<partial name="_MenuNav" />
+
+@* End Menu Nav *@
+
+<main class="p-4">
+    <div class="title-posts-div d-flex align-items-center">
+        <h2>آخرین پست ها</h2>
+        <hr class="bg-warning col ml-3" />
+    </div>
+
+    @{
+        if (postsThisPage != null && postsThisPage.Count > 0)
+        { 
+            <partial name="_ShortDispalyPosts" model="@postsThisPage" />
+        }
+    }
+    @if (ViewBag.CountPosts != 0)
+    {
+
+        <nav class="pagination-div" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                @{
+                    int pageCurrent = ViewBag.pageCurrent;
+                    int CountPages = ViewBag.CountPages;
+
+                    if (pageCurrent > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-Page="@(pageCurrent-1)">صفحه قبل</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link">صفحه قبل</a>
+                        </li>
+                    }
+
+                    bool flagStart = true;
+                    bool flagEnd = true;
+
+                    for (int i = 1; i <= CountPages; i++)
+                    {
+                        if (i == 1 || i == CountPages)
+                        {
+                            if (i == 1)
+                            {
+                                if (i == pageCurrent)
+                                {
+                                    <li class="page-item active">
+                                        <a class="page-link">@i</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-Page="@i">@i</a>
+                                    </li>
+                                }
+                            }
+                            else if (i == CountPages)
+                            {
+                                if (i == pageCurrent)
+                                {
+                                    <li class="page-item active">
+                                        <a class="page-link">@i</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-Page="@i">@i</a>
+                                    </li>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (i == pageCurrent)
+                            {
+                                <li class="page-item active">
+                                    <a class="page-link">@i</a>
+                                </li>
+                            }
+                            else
+                            {
+                                if (i > pageCurrent)
+                                {
+                                    if (flagStart)
+                                    {
+                                        flagStart = false;
+                                        <li class="page-item disabled">
+                                            <a class="page-link">...</a>
+                                        </li>
+                                    }
+                                }
+                                else if (i < pageCurrent)
+                                {
+                                    if (flagEnd)
+                                    {
+                                        flagEnd = false;
+                                        <li class="page-item disabled">
+                                            <a class="page-link">...</a>
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (pageCurrent < CountPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-Page="@(pageCurrent+1)">صفحه بعد</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link">صفحه بعد</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+
+    }
+    else
+    {
+        <div class="not-div">
+            <h6 class="not-h6">
+                هنوز پستی موجود نیست
+            </h6>
+        </div>
+
+    }
+
+</main>
+
+
+
+
+@{
+    if (User.Identity.IsAuthenticated == false)
+    {
+        <partial name="_ModalAccount" />
+    }
+}
+
+@section Meta{
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="صفحه اصلی سایت وبلاگر">
+    <meta name="keyword" content="مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر ,نوشتن,نویسندگی,کتاب,وبلاگ">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+    <meta name="google-site-verification" content="ZKb4D_ejTGJJ3dNowXmJb_483AW-1DMhVs6HCKt4Cf0" />
+
+}
+
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/Index.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Partials/_DisplayPosts.css" type="text/css" />
+
+    @if (User.Identity.IsAuthenticated == false)
+    {
+        <link rel="stylesheet" href="~/css/Partials/_ModalAccount.css" type="text/css" />
+    }
+}
+
+@section Scripts{
+
+    <script src="~/js/Pages/Index.js"></script>
+    <script src="~/js/Partials/_DisplyPosts.js"></script>
+
+    @* Refrence Bootstrap *@
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    @* End *@
+
+    @if (User.Identity.IsAuthenticated == false)
+    {
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/popper.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+    }
+}

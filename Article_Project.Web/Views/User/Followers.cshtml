@@ -1,0 +1,165 @@
+﻿@model Tuple<MainInfoUserDto, List<Follow>>
+
+@inject IUnitOfWork _unitOfWork
+
+@inject UserManager<User> _userManager
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService _authorizeService
+
+
+@{
+    ViewData["Title"] = "دنبال شونده کننده ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    MainInfoUserDto userModel = Model.Item1;
+    List<Follow> followerRows = Model.Item2;
+}
+
+<main>
+    <div class="follows-div col-11 col-md-9 col-lg-8">
+        <div class="header-follows-div">
+            @{
+                <div class="body-div d-flex">
+                    <section class="col-6 d-flex p-0">
+                        <div class="user-img-div">
+                            <a asp-controller="User" asp-action="Profile" asp-route-UserName="@userModel.UserName" class="text-reset text-decoration-none">
+                                @if (userModel.ImageProfileName != null)
+                                {
+                                    <img class="rounded-circle" src="~/images/ImgProfile/@userModel.ImageProfileName" alt="@userModel.NameShow" />
+                                }
+                                else
+                                {
+                                    <img class="rounded-circle" src="~/images/Userimg.png" />
+                                }
+                            </a>
+                        </div>
+                        <div class="text-div">
+                            <a asp-controller="User" asp-action="Profile" asp-route-UserName="@userModel.UserName" class="text-reset text-decoration-none">
+                                <h6 class="user-name-h6">@userModel.UserName</h6>
+                                <h5 class="name-show-h5">@userModel.NameShow</h5>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+                <h6 class="count-follower-h6">@followerRows.Count دنبال کننده</h6>
+
+            }
+        </div>
+        <div class="body-follows-div">
+            @if (followerRows.Count > 0)
+            {
+                @for (int i = 0; i < followerRows.Count; i++)
+                {
+                    User followerUser = _userManager.FindByIdAsync(followerRows[i].UserId).Result;
+
+                    <div UserId="@followerUser.Id" class="follower-div my-2">
+                        <div class="body-div d-flex">
+                            <section class="col-6 d-flex">
+                                <div class="follower-img-div">
+                                    <a asp-controller="User" asp-action="Profile" asp-route-UserName="@followerUser.UserName" class="text-reset text-decoration-none">
+                                        @if (followerUser.ImageProfileName != null)
+                                        {
+                                            <img class="rounded-circle" src="~/images/ImgProfile/@followerUser.ImageProfileName" alt="@followerUser.NameShow" />
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" src="~/images/Userimg.png" />
+
+                                        }
+                                    </a>
+                                </div>
+                                <div class="text-div">
+                                    <a asp-controller="User" asp-action="Profile" asp-route-UserName="@followerUser.UserName" class="text-reset text-decoration-none">
+                                        <h6 class="user-name-h6">@followerUser.UserName</h6>
+                                        <h5 class="name-show-h5">@followerUser.NameShow</h5>
+                                    </a>
+                                </div>
+                            </section>
+                            <section class="col-6 text-left">
+                                <div class="btns-div d-flex justify-content-end align-items-center">
+                                    @{
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+                                            User userActive = _userManager.GetUserAsync(User).Result;
+
+                                            if (userActive.Id != userModel.Id)
+                                            {
+
+                                                if (followerUser.Id != userActive.Id)
+                                                {
+                                                    if (_unitOfWork.FollowRepository.GetAllAsync(f => f.UserId == userActive.Id && f.FollowTo == followerUser.Id, null).Result.Any())
+                                                    {
+                                                        <button UserId="@followerUser.Id" class="following-btn btn border-info">دنبال می کنید</button>
+                                                        <button UserId="@followerUser.Id" class="follow-btn d-none btn btn-info">دنبال کردن</button>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <button UserId="@followerUser.Id" class="follow-btn btn btn-info">دنبال کردن</button>
+                                                        <button UserId="@followerUser.Id" class="following-btn btn btn-light border-info d-none">دنبال می کنید</button>
+
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <button UserId="@followerUser.Id" class="remove-btn btn btn-warning">ریموو</button>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <button UserId="@followerUser.Id" class="follow-btn btn btn-info">دنبال کردن</button>
+                                        }
+                                    }
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                }
+
+            }
+            else
+            {
+
+                <div class="not-div">
+                    <h6 class="not-h6">
+                        دنبال کننده ای برای این کاربر وجود ندارد
+                    </h6>
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+</main>
+
+
+
+<partial name="_ModalAccount" />
+
+
+@section Meta{
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="دنبال کننده های کاربر">
+    <meta name="keyword" content="مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر,دنبال کننده ها,دنبال کننده,کاربران,follower,followers ">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+}
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/UserFollower.css" type="text/css" />
+
+    <link rel="stylesheet" href="~/css/Partials/_ModalAccount.css" type="text/css" />
+}
+@section Scripts{
+
+    <script src="~/js/Pages/UserFollower.js"></script>
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+}

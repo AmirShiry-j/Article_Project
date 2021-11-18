@@ -1,0 +1,38 @@
+﻿
+
+@{
+    ViewData["Title"] = "صفحه ارور";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<main class="d-flex justify-content-center">
+    <div class="error-div col-11 col-sm-10 col-md-8 col-lg-7">
+        <div class="text-error-div alert-warning p-5 text-center">
+            متاسفانه آدرس وارد شده اشتباه است و صفحه مورد نظر یافت نشد!
+        </div>
+        <h6 class="help-h6 text-center">برای رفتن به صفحه اصلی سایت وبلاگر روی دکمه زیر کلیک نمایید.</h6>
+        <div class="main-page-div text-center">
+            <a asp-controller="Home" asp-action="Index" class="main-page-a btn btn-info">
+                صفحه اصلی سایت وبلاگر
+            </a>
+        </div>
+    </div>
+</main>
+
+@section Meta{
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="صفحه ارور سایت وبلاگر">
+    <meta name="keyword" content="مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر ,ارور,پیدا نکردن url">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="nofollow, noindex">
+}
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/Error.css" type="text/css" />
+
+}
+

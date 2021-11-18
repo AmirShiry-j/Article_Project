@@ -1,0 +1,42 @@
+﻿@inject UserManager<User> _userManager
+
+@model IList<string>
+
+@{
+    ViewData["Title"] = "RolesList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>نقش ها کاربر : @ViewBag.UserName</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Role Name</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var name in Model)
+        {
+            <tr>
+                <td>
+                    @name
+                </td>
+                <td>
+                    @if (name == "Admin")
+                    {
+                        if (_userManager.GetUsersInRoleAsync("Admin").Result.Count != 1)
+                        {
+                            @Html.ActionLink("Delete Role", "DeleteUserRole", "Users", new { Name = name, UserId = ViewBag.UserId, area = "Admin" });
+                        }
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Delete Role", "DeleteUserRole", "Users", new { Name = name, UserId = ViewBag.UserId, area = "Admin" });
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

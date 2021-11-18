@@ -1,0 +1,87 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<User> _userManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    @RenderSection("Meta", false)
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/bootstrap-rtl.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/Other/Fonts.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Partials/_TopSections.css" type="text/css" />
+
+    @RenderSection("Css", false)
+
+
+</head>
+<body dir="rtl">
+
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            User userLogin = _userManager.GetUserAsync(User).Result;
+
+            <nav class="asli-nav d-flex sticky-top">
+                <div class="nav-sec-right d-flex col-6">
+                    <div class="item-div">
+                        <a asp-controller="Home" asp-action="Index">صفحه اصلی</a>
+                    </div>
+                    <div class="item-div">
+                        <a asp-controller="Post" asp-action="Friends">پست های دوستان</a>
+                    </div>
+                    <div class="item-div d-none d-md-flex">
+                        <a href="#">درباره ما</a>
+                    </div>
+                </div>
+                <div class="nav-sec-left d-flex flex-row-reverse col-6">
+                    <div class="item-2-div">
+                        <a asp-controller="User" asp-action="Profile" asp-route-UserName="@userLogin.UserName" class="write-btn btn">@userLogin.UserName <i class="fa fa-user-circle-o"></i></a>
+                    </div>
+                    <div class="item-2-div">
+                        <a asp-controller="Post" asp-action="Create" class="write-btn btn"> نوشتن پست جدید <i class="fa fa-pencil"></i> </a>
+                    </div>
+                </div>
+            </nav>
+        }
+        else
+        {
+            <nav class="asli-nav d-flex sticky-top">
+                <div class="nav-sec-right d-flex col-6">
+                    <div class="item-div">
+                        <a asp-controller="Home" asp-action="Index">صفحه اصلی</a>
+                    </div>
+                    <div class="item-div d-none d-md-flex">
+                        <a href="#">درباره ما</a>
+                    </div>
+                    <div class="item-div d-none d-md-flex">
+                        <a href="#">تماس با ما</a>
+                    </div>
+
+                </div>
+                <div class="nav-sec-left d-flex flex-row-reverse col-6">
+                    <div class="item-div">
+                        <a asp-controller="Account" asp-action="Login">ورود</a>
+                    </div>
+                    <div class="item-div">
+                        <span>|</span>
+                    </div>
+                    <div class="item-div">
+                        <a asp-controller="Account" asp-action="Register">ثبت نام</a>
+                    </div>
+                </div>
+            </nav>
+        }
+    }
+
+
+
+    @RenderBody()
+
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,110 @@
+﻿
+/* Post */
+
+.posts-div{
+    font-family:vazir;
+}
+
+.outer-post-div{
+
+}
+
+.post-div {
+   
+   padding:10px;
+   border-radius:5px;
+   box-shadow:1px 1px 5px #aaa;
+
+}
+.post-div:hover{
+   box-shadow:1px 1px 8px #aaa;
+
+}
+
+/* Header */
+.header-div section{
+    padding:0px;
+}
+.header-div .text-div{
+    padding-right:7px;
+    margin:0;
+}
+.header-div .author-img-div img {
+    height: 45px;
+    width: 45px;
+}
+.header-div .name-show-h5 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #444444;
+}
+.header-div .time-post-h6 {
+    font-size: 10px;
+    color: #8f8f8f;
+}
+.header-div .subject-div {
+    padding: 5px 5px;
+}
+.header-div .subject-h6 {
+    font-size: 11px;
+}
+/* End Header*/
+/* Body */
+.body-div {
+    padding-top:15px;
+    padding-bottom:10px;
+}
+.body-div .title-div{
+    padding:0px 5px;
+    
+}
+.body-div .title-h2{
+    font-size:18px;
+    font-weight:bold;
+    color:#363636;
+    line-height:30px;
+    height:30px;
+    width:85%;
+}
+.body-div .post-img-div{
+    margin-top:20px;
+    width:100%;
+}
+.body-div .post-img {
+    width: 98%;
+    height: 200px;
+    display:block;
+    margin:0px auto;
+}
+.body-div .text-div{
+    margin:20px 5px;
+    line-height:20px;
+    height:20px;
+    width:85%;
+
+}
+.body-div .text-p{
+
+    font-size:16px;
+    color:#363636;
+
+}
+/* End Body */
+/* Footer */
+.footer-div {
+    
+}
+.footer-div i{
+    font-size:18px;
+     color:#444;
+}
+.footer-div .count-like-span{
+    font-size:13px;
+}
+.footer-div .like-div, .footer-div .bookmark-div {
+    cursor:pointer;
+}
+
+/* End Footer */
+
+/* End Post */

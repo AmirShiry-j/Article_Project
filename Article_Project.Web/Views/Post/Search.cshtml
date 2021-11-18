@@ -1,0 +1,187 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "جستوجو";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ShortDisplayPostDto> posts = ViewData["PostsPage"] as List<ShortDisplayPostDto>;
+
+}
+
+
+<main class="px-4 py-4">
+    <div class="title-posts-div d-flex align-items-center">
+        <h2>جستوجو برای : &nbsp; @Model.ToString()</h2>
+        <hr class="bg-warning col ml-3" />
+    </div>
+    @if (ViewBag.CountPosts != 0)
+    {
+        <h3 class="count-posts-h3">تعداد نتیجه های یافت شده : @ViewBag.CountPosts پست</h3>
+    }
+    @{
+
+        if (posts != null&&posts.Count>0)
+        {
+            <partial name="_ShortDispalyPosts" model="@posts" />
+        }
+
+        @if (ViewBag.CountPosts != 0)
+        {
+
+            <nav class="pagination-div" aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    @{
+                        int pageCurrent = ViewBag.pageCurrent;
+                        int CountPages = ViewBag.CountPages;
+
+                        if (pageCurrent > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="Post" asp-action="Search" asp-route-Tag="@Model" asp-route-Page="@(pageCurrent-1)">صفحه قبل</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">صفحه قبل</a>
+                            </li>
+                        }
+
+                        bool flagStart = true;
+                        bool flagEnd = true;
+
+                        for (int i = 1; i <= CountPages; i++)
+                        {
+
+                            if (i == 1 || i == CountPages)
+                            {
+                                if (i == 1)
+                                {
+                                    if (i == pageCurrent)
+                                    {
+                                        <li class="page-item active">
+                                            <a class="page-link">@i</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" asp-controller="Post" asp-action="Search" asp-route-Tag="@Model" asp-route-Page="@i">@i</a>
+                                        </li>
+                                    }
+                                }
+                                else if (i == CountPages)
+                                {
+                                    if (i == pageCurrent)
+                                    {
+                                        <li class="page-item active">
+                                            <a class="page-link">@i</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" asp-controller="Post" asp-action="Search" asp-route-Tag="@Model" asp-route-Page="@i">@i</a>
+                                        </li>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (i == pageCurrent)
+                                {
+                                    <li class="page-item active">
+                                        <a class="page-link">@i</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    if (i > pageCurrent)
+                                    {
+                                        if (flagStart)
+                                        {
+                                            flagStart = false;
+                                            <li class="page-item disabled">
+                                                <a class="page-link">...</a>
+                                            </li>
+                                        }
+
+                                    }
+                                    else if (i < pageCurrent)
+                                    {
+                                        if (flagEnd)
+                                        {
+                                            flagEnd = false;
+                                            <li class="page-item disabled">
+                                                <a class="page-link">...</a>
+                                            </li>
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+
+                        if (pageCurrent < CountPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="Post" asp-action="Search" asp-route-Tag="@Model" asp-route-Page="@(pageCurrent+1)">صفحه بعد</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">صفحه بعد</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+
+        }
+        else
+        {
+            <div class="not-div">
+                <h6 class="not-h6">
+                    نتیجه ای یافت نشد
+                </h6>
+            </div>
+
+        }
+
+    }
+</main>
+
+
+@if (User.Identity.IsAuthenticated == false)
+{
+    <partial name="_ModalAccount" />
+}
+
+@section Meta
+{
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="صفحه سرچ سایت وبلاگر">
+    <meta name="keyword" content="مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر ,جستو جو,search,سرچ ,پست">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+}
+@section Css
+{
+    <link rel="stylesheet" href="~/css/Pages/Search.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Partials/_DisplayPosts.css" type="text/css" />
+
+}
+@section Scripts
+{
+    @if (User.Identity.IsAuthenticated == false)
+    {
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/popper.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+    }
+    <script src="~/js/Partials/_DisplyPosts.js"></script>
+}

@@ -1,0 +1,36 @@
+﻿
+<!-- Button trigger modal -->
+<button type="button" id="modal-account-btn" class="btn btn-primary d-none" data-toggle="modal" data-target="#modal-account-div">
+    Launch demo modal
+</button>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="modal-account-div" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">دوست عزیز</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body m-4">
+                <p class="">برای استفاده از همه امکانات سایت وبلاگر باید به اکانت خود وارد شوید یا در صورت نداشتن اکانت در سایت ثبت نام کنید</p>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center ">
+                    <div>
+                        <a class="btn btn-info border-0 rounded-pill login-a" asp-controller="Account" asp-action="Login">ورود</a>
+
+                    </div>
+                    <div>
+                        <a class="btn border rounded-pill signup-a" asp-controller="Account" asp-action="Register">ثبت نام</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

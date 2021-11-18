@@ -1,0 +1,29 @@
+﻿
+body {
+    font-family: sahel;
+    background-color: #f8f9fa;
+    direction:rtl;
+}
+.title-posts-div {
+    font-size: 14px;
+}
+.title-posts-div h1{
+    font-size:14px;
+}
+.pagination-div {
+    margin-top: 20px;
+    direction: ltr;
+    font-size: 14px;
+}
+.not-div{
+    
+    display:flex;
+    height:70vh;
+}
+.not-h6{
+
+    color:gray;
+    font-size:14px;
+    margin:auto;
+    text-align:center;
+}

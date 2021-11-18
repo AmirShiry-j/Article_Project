@@ -1,0 +1,153 @@
+﻿@model Article_Project.Dtoes.Dto.Post.CreadPostDto
+
+@{
+    ViewData["Title"] = "نوشتن پست";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="p-4 d-flex">
+    <div class="header-sec-right d-flex align-items-center col-6">
+
+    </div>
+    <div class="header-sec-left d-flex flex-row-reverse col-6">
+
+        <button id="test-show-btn" class="write-btn btn btn-info"><i class="fa fa-share"></i> &nbsp;به اشتراک گذاشتن</button>
+
+    </div>
+</header>
+
+
+<!-- Button trigger modal -->
+<button id="Show-modal-btn-1" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModalCenter-1">
+    Launch demo modal
+</button>
+<button id="Show-modal-btn-2" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModalCenter-2">
+    Launch demo modal
+</button>
+
+<!-- Modal 1 -->
+<div class="modal-1 modal fade" id="exampleModalCenter-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header px-5">
+                <h5 class="modal-title" id="exampleModalLongTitle">توجه</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body p-5">
+
+                <ul>
+                </ul>
+
+            </div>
+            <div class="modal-footer">
+                <button id="close-btn-1" type="button" class="btn btn-info" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div class="modal-2 modal fade" id="exampleModalCenter-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-warning" id="exampleModalLongTitle">تکمیل پست</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body p-4">
+
+
+                <div class="inner-div pt-4">
+
+                    <p class="text-justify">با افزودن تگ ها و تعیین موضوع مقاله خود، آن را راحت تر به دست خوانندگان برسانید ( اختیاری )</p>
+
+                    <input class="form-control mt-4 tags-inputt" placeholder="تگ ها را با علامت (-) از همدیگر جداکنید" type="text" id="Keywords-input" required />
+
+                    <select id="subject-select" name="subject" class="custom-select mt-4">
+                        <option value="غیره" selected>موضوع مقاله</option>
+                        <option value="هوش مصنوعی">هوش مصنوعی</option>
+                        <option value="کسب و کار">کسب و کار</option>
+                        <option value="روانشناسی">روانشناسی</option>
+                        <option value="فناوری">فناوری</option>
+                        <option value="استارت آپ">استارت آپ</option>
+                        <option value="برنامه نویسی">برنامه نویسی</option>
+                        <option value="موفقیت">موفقیت</option>
+                        <option value="سینما">سینما</option>
+                        <option value="موسیقی">موسیقی</option>
+                        <option value="هنر">هنر</option>
+                        <option value="غیره">غیره</option>
+                    </select>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="close-btn-2" type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                <button id="send-post-btn" type="button" class="btn btn-info"><i class="fa fa-send"></i> انتشار مقاله&nbsp;</button>
+            </div>
+        </div>
+    </div>
+</div>
+@* End Nav and Header *@
+
+
+@* Title *@
+<div class="title-div">
+    <input multiple class="title-input" maxlength="80" type="text" autofocus placeholder="عنوان مقاله را اینجا وارد کنید..." />
+</div>
+@* End Title *@
+
+
+@* Body *@
+<div class="body-div">
+
+    <textarea class='text-textarea-1 autoExpand' rows='1' data-min-rows='1' placeholder='هر چی دلت میخواد بنویس...'></textarea>
+
+
+    <div id="services-div" class="d-flex">
+        <button id="img-btn" class="img-btn btn rounded-circle"><i class="fa fa-camera"></i></button>
+        <button id="text-btn" class="text-btn btn rounded-circle"><i class="fa fa-pencil"></i></button>
+    </div>
+</div>
+@* End Body *@
+
+
+@* Form Memory *@
+<form id="memory-form" asp-action="Create" method="post" enctype="multipart/form-data">
+    <input asp-for="Title" name="Title" class="title-inputt" type='text' />
+    <input asp-for="Orders" name="Orders" class="order-input" type='text' value="t1" />
+    <input asp-for="Texts" name="Texts" class="texts-input" type="text" />
+    <input asp-for="Subject" name="Subject" class="subject-input" type="text" />
+    <input asp-for="Tags" name="Tags" class="tags-input" type="text" />
+    <input id="submit-input" type="submit" />
+</form>
+@* End Form Memory *@
+
+
+@section Meta{
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="صفحه نوشتن پست در سایت وبلاگر">
+    <meta name="keyword" content="مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر,نوشتن پست,نوشتن مقاله,نوشتن,نویسندگی ">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+}
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/Create.css" type="text/css" />
+
+}
+@section Scripts{
+    <script src="~/js/Pages/Create.js"></script>
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+}

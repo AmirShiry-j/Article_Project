@@ -1,0 +1,79 @@
+﻿@model Article_Project.Dtoes.Dto.Account.TwoFactorDto
+
+@{
+    ViewData["Title"] = "ورود دو مرحله ای";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-container-div d-flex justify-content-center align-items-start">
+    <div class="inner-container-div col-12 col-md-10 col-lg-9">
+        <div class="login-div">
+            <div class="title-login-div">
+                <img class="login-img" src="~/images/Userimg.png" alt="ورود به حساب کاربری" />
+                <h1>ورود به حساب کاربری</h1>
+            </div>
+            <hr class="bg-warning" />
+            <div class="form-div">
+                <form asp-action="TwoFactorLogin">
+                    <div class="row">
+                        <div class="form-group col-12 my-2">
+                            <div class="alert-success">
+                                کدی جهت ورود امن به حساب کاربری به ایمیل شما ارسال شده است. لطفا برای ورود آن را وارد کنید
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12 mt-4">
+
+                            <label for="Code">کد 6 رقمی</label>
+
+                            <input name="Code" autocomplete="off" type="text" class="form-control"
+                                   asp-for="Code" />
+
+                            <span class="text-danger"
+                                  asp-validation-for="Code"></span>
+
+                            <input name="IsPersistans" type="hidden" class="form-control"
+                                   asp-for="IsPersistans" />
+                            <input name="Provider" type="hidden" class="form-control"
+                                   asp-for="Provider" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12 text-center">
+                            <input class="btn btn-info border-0 rounded-pill login-btn-inuput" type="submit" value="ورود" />
+                            <a class="btn border rounded-pill signup-a" asp-action="Login">بازگشت</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Meta{
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="follow, index">
+    <meta name="description" content="صفحه ورود به حساب">
+    <meta name="keyword" content="ورود دو مرحله ای,حساب کاربری,لاگین,ورود,حساب,مقاله , وبلاگ , مقاله نویسی , وبلاگ نویسی , وبلاگر ">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+}
+
+@section Css{
+
+
+    <link rel="stylesheet" href="~/css/Pages/Login.css" type="text/css" />
+
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,42 @@
+﻿body {
+
+    background-color:#f8f8f8;
+    font-family:'vazir';
+    direction:rtl;
+}
+
+.error-div{
+
+    margin-top:50px;
+    background-color:white;
+    font-size:16px;
+    border:1px #aaa solid;
+    border-radius:3px;
+    padding:40px 30px;
+}
+.text-error-div{
+
+    border-radius:3px;
+    border:1px solid #ffea7c;
+    padding:40px 20px !important;
+    line-height:30px;
+
+}
+.help-h6{
+
+    margin-top:30px;
+    font-size:15px;
+
+}
+.main-page-div{
+    margin-top:30px;
+    padding:0px;
+}
+.main-page-a {
+    font-size: 14px;
+    height:45px;
+    text-align:center;
+    padding:13px;
+    width:180px;
+    color: white !important;
+}

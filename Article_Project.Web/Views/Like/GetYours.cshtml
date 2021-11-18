@@ -1,0 +1,63 @@
+﻿@model List<ShortDisplayPostDto>
+
+@{
+    ViewData["Title"] = "لایک ها";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ShortDisplayPostDto> posts = Model;
+}
+
+
+
+<main class="px-4 py-4">
+    <div class="title-posts-div d-flex align-items-center">
+        <h1>پست های مورد علاقه شما</h1>
+        <hr class="bg-warning col ml-3" />
+    </div>
+    @{
+
+        if (posts != null)
+        {
+            if (posts.Count != 0)
+            {
+
+                <partial name="_ShortDispalyPosts" model="@posts" />
+
+            }
+            else
+            {
+                <div class="not-div">
+                    <h6 class="not-h6">
+                        در حال حاضر پستی رو لایک <i class="fa fa-heart text-danger"></i> نکردید
+                    </h6>
+                </div>
+            }
+        }
+    }
+
+</main>
+
+
+
+@section Meta{
+
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta name="description" content="پست های مورد علاقه شما در سایت وبلاگر">
+    <meta name="keyword" content=" مقاله نویسی , وبلاگ نویسی , وبلاگر ,نوشتن,نویسندگی,like,مورد علاقه,Likes,پست">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+}
+
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/YourLikes.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Partials/_DisplayPosts.css" type="text/css" />
+
+}
+
+@section Scripts{
+
+    <script src="~/js/Partials/_DisplyPosts.js"></script>
+}

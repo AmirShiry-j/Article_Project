@@ -1,0 +1,156 @@
+﻿@model Article_Project.Dtoes.Dto.Account.EditUserDto
+
+@{
+    ViewData["Title"] = "ویرایش پروفایل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="main-container-div d-flex justify-content-center align-items-start">
+    <div class="inner-container-div col-12 col-md-10 col-lg-9">
+        <div class="profile-div">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                @* Header profile *@
+                <div class="header-div row no-gutters justify-content-center justify-content-md-start">
+                    <section class="profile-sec1 col-12 col-md-auto text-center">
+                        @{
+                            if (Model.NameImageProfile != null)
+                            {
+                                <img class="img-pro rounded-circle" src="~/images/ImgProfile/@Model.NameImageProfile" alt="@Model.NameShow" />
+                            }
+                            else
+                            {
+                                <img class="img-pro rounded-circle" src="~/images/Userimg.png" />
+                            }
+                        }
+                    </section>
+                    <section class="profile-sec2 col-12 col-md-auto ">
+                        <h2 class="name-show-h2">@Model.NameShow</h2>
+                        <h3 class="user-name-h3">@Model.UserName@@</h3>
+                        <button class="change-pro-btn btn btn-info" type="button">
+                            تغییر تصویر پروفایل
+                        </button>
+                        @if (Model.NameImageProfile != null)
+                        {
+                            <button class="delete-pro-btn btn btn-danger" type="button">
+                                حذف تصویر
+                            </button>
+                        }
+
+                        <input name="ImgFile" class="img-input d-none" type="file" accept=".png, .jpg, .jpeg" />
+                    </section>
+                </div>
+                @* End Header Edit profile *@
+                <hr />
+                @* Body Edit Profile *@
+                <div class="body-div">
+
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-12 col-md-6">
+
+                            <label asp-for="UserName">نام کاربری</label>
+
+                            <input asp-for="UserName"
+                                   autocomplete="off" type="text" class="form-control" />
+
+                            <span class="text-danger"
+                                  asp-validation-for="UserName"></span>
+
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            <label asp-for="Email">ایمیل</label>
+
+                            <input asp-for="Email"
+                                   autocomplete="off" readonly placeholder="example@@gmail.com" type="text" class="form-control" />
+                            <input asp-for="NameImageProfile" type="hidden" />
+
+                            <span class="text-danger"
+                                  asp-validation-for="Email"></span>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+
+                            <label asp-for="NameShow">نام نمایشی</label>
+
+                            <input asp-for="NameShow"
+                                   autocomplete="off" type="text" class="form-control" />
+
+                            <span class="text-danger"
+                                  asp-validation-for="NameShow"></span>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+                            <label asp-for="MobilePhone">شماره موبایل</label>
+
+                            <input asp-for="MobilePhone"
+                                   autocomplete="off" type="text" class="form-control" />
+
+                            <span class="text-danger"
+                                  asp-validation-for="MobilePhone"></span>
+
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label asp-for="Biography">بیوگرافی</label>
+
+                            <textarea asp-for="Biography"
+                                      rows="3" autocomplete="off" type="text" class="form-control"></textarea>
+
+                            <span class="text-danger"
+                                  asp-validation-for="Biography"></span>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6">
+
+                            <h5>تنظیمات کاربری</h5>
+
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox mt-4">
+                                    <input asp-for="TwoFactor" class="custom-control-input" type="checkbox" />
+                                    <label class="custom-control-label" for="TwoFactor">ورود دو مرحله ای</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row no-gutters justify-content-end col-12">
+                        <input class="btn btn-info" type="submit" value="ذخیره تغییرات" />
+                        <a asp-action="ChangePassword" class="btn btn-warning">تغییر پسورد</a>
+
+                    </div>
+                </div>
+                @* End Body Edit Profile *@
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Meta{
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="ویرایش پروفایل کاربری">
+    <meta name="keyword" content=" کاربر , وبلاگ , اطلاعات ,ویرایش پروفایل , پروفایل , وبلاگر ">
+    <meta name="author" content="وبلاگر">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="follow, index">
+}
+
+@section Css{
+
+    <link rel="stylesheet" href="~/css/Pages/Edit.css" type="text/css" />
+    <link rel="stylesheet" href="~/Sweetalert2/sweetalert2.min.css" type="text/css" />
+
+}
+@section Scripts{
+    <script src="~/js/Pages/Edit.js"></script>
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+}

@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<Article_Project.Dtoes.Dto.AdminArea.Comments.ListCommentDto>
+
+@{
+    ViewData["Title"] = "ListComments";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    string UserId = ViewData["UserId"].ToString();
+    string UserName = ViewData["UserName"].ToString();
+
+}
+
+<h1>لیست کامنت های : @UserName</h1>
+
+<p>
+    <a asp-action="DeleteAllComment" asp-route-UserId="@UserId" >حذف همه کامنت ها</a>
+</p>
+
+<form asp-action="ListComments" method="get" class="d-flex">
+    <input type="hidden" name="UserId" value="@UserId"/>
+    <label >سرچ با تکست</label>
+    <input class="form-control col-5" name="Search" required/>
+    <input type="submit" class="btn btn-success" value="Search"/>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsReply)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountReplys)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.postId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsReply)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountReplys)
+            </td>
+            <td>
+                <a asp-area="" asp-controller="Post" asp-action="Show" asp-route-PostId="@item.postId">
+                    @Html.DisplayFor(modelItem => item.postId)
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Comments" asp-action="Delete" asp-route-CommentId="@item.Id" asp-route-UserId="@UserId" >حذف</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

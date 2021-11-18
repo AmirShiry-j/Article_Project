@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<User> _userManager
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService _authorizeService
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    @RenderSection("Meta", false)
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/bootstrap-rtl.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/Other/Fonts.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Partials/_TopSections.css" type="text/css" />
+
+    @RenderSection("Css", false)
+
+
+</head>
+<body dir="rtl">
+
+    @{
+        <nav class="asli-nav d-flex sticky-top">
+                <div class="nav-sec-right d-flex col-6">
+                    <div class="item-div">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی سایت</a>
+                    </div>
+                    @if (_authorizeService.AuthorizeAsync(User, "AdminUsers").Result.Succeeded)
+                    {
+                        <div class="item-div">
+                            <a asp-controller="Role" asp-action="Index">نقش ها</a>
+                        </div>
+                    }
+
+                    <div class="item-div">
+                        <a asp-controller="Users" asp-action="Index">کاربران</a>
+                    </div>
+             
+                </div>
+            <div class="nav-sec-left d-flex flex-row-reverse col-6">
+                <div class="item-2-div">
+                    <a asp-controller="Role" asp-action="Create" class="write-btn btn"></a>
+                </div>
+
+            </div>
+        </nav>
+    }
+
+    <main class="px-5 py-3">
+        @RenderBody();
+
+    </main>
+
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

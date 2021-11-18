@@ -1,0 +1,225 @@
+﻿
+body {
+    font-family: vazir;
+    background-color: #f8f8f8;
+    direction:rtl;
+}
+
+@media (min-width:0px) {
+    .post-div {
+        padding: 50px 25px;
+    }
+}
+
+@media (min-width:768px) {
+    .post-div {
+        padding: 50px 90px;
+    }
+}
+
+article .title-h1{
+    font-size:20px;
+    color:#444;
+    font-weight:bold;
+}
+
+article .text-p{
+    font-size:15px;
+    color:#333;
+    text-align:justify;
+    line-height:35px;
+    /*text-indent:15px;*/
+}
+/*Prop*/
+.property-div{
+    color:#444;
+}
+.property-div i{
+    font-size:18px;
+}
+.like-div ,.bookmark-div{
+    cursor: pointer;
+}
+
+/*Prop*/
+
+article .image-img{
+    width:70%;
+    height:auto;
+    display:block;
+    margin:0px auto;
+    border-radius:3px;
+}
+.time-create-h6{
+    font-size:10px;
+    color:gray;
+}
+.tags-h6 {
+    font-size: 12px;
+}
+.tag-span{
+    background-color:#96d7d1 !important;
+    font-weight:normal;
+    margin-bottom:50px;
+}
+.subject-span {
+    background-color: #fce350 !important;
+    font-weight: normal;
+    margin-bottom: 50px;
+}
+.author-section {
+}
+.author-section .author-img {
+    height:60px;
+    width:60px;
+    border-radius:2px;
+}
+.author-section .author-h5 {
+
+    font-size:16px;
+}
+.user-img{
+    height:50px;
+    width:50px;
+}
+.follow-btn{
+    height:28px;
+    width:115px;
+    font-size:11px;
+    margin-right:10px;
+    
+}
+.following-btn {
+    height: 28px;
+    width:115px;
+    font-size: 11px;
+    margin-right: 10px;
+}
+.delete-btn {
+    font-size: 11px;
+    color: white;
+    width: 80px;
+    margin-right:15px;
+    /*background-color:orange;*/
+}
+.delete-btn:hover{
+    color:white;
+}
+/*Write Comment*/
+.create-comment-div {
+    background-color: white;
+    border: 1px #fce350 solid;
+    border-radius: 4px;
+}
+.create-comment-div:hover{
+    box-shadow: 0px 0px 6px #fce350;
+
+}
+.create-comment-div .form-control{
+
+    font-size:15px;
+    box-shadow: 0px 0px 3px #96d7d1 !important;
+    border: 1px solid #96d7d1 !important;
+
+}
+.add-comment-div{
+    padding:5px;
+    cursor:pointer;
+}
+.create-comment-div .title-comment-div span {
+    margin: auto 25px;
+}
+/*End Write Comment*/
+
+
+/* Comments */
+.comments-div{
+    margin:40px 0px;
+}
+.reply-btn{
+    font-size:14px;
+}
+.replys-div{
+    padding-right:50px;
+
+}
+.comment-div {
+    background-color: white;
+    border-radius: 4px;
+    margin: 20px 0px;
+    border: 1px solid #96d7d1;
+}
+
+.comment-div:hover {
+
+    box-shadow: 0px 0px 8px #96d7d1;
+
+}
+.comment-div .comment-title-div
+{
+    display:flex;
+    padding:5px;
+
+}
+.comment-div .comment-title-div .nameshow-h5{
+    font-size:15px;
+    color:black;
+}
+.comment-div .comment-title-div .time-h6{
+    font-size:10px;
+    color:gray;
+
+}
+.comment-div .comment-body-div{
+    padding:0px 10px;
+}
+.comment-div .comment-body-div .text-comment-p{
+    font-size:14px;
+    
+}
+.comment-div .comment-footer-div{
+    text-align:left;
+}
+/* End Comments */
+
+/* Modal Delete Post */
+#modal-delete-post-div .close-btn {
+    
+    font-size: 12px;
+    width: 100px;
+    height: 36px;
+    background-color: #fff;
+    color: black;
+}
+#modal-delete-post-div .delete-a {
+    font-size: 13px;
+    width: 115px;
+    height: 36px;
+    background-color: #00c5bc;
+    color: white;
+    margin-right: 15px;
+}
+#modal-delete-post-div .delete-a i{
+    font-size:16px;
+}
+/* Modal 1 */
+#modal-delete-post-div .modal-title {
+    font-size: 17px !important;
+    /*color: #e5ad06;*/
+}
+
+#modal-delete-post-div .modal-body {
+    font-size: 15px;
+    color: #5b5b5b;
+}
+
+#modal-delete-post-div .modal-footer {
+    font-size: 12px;
+    padding:10px !important;
+}
+/* End Modal 1 */
+#modal-delete-post-div a {
+    font-size: 15px;
+}
+
+/* End Modal Delete Post */

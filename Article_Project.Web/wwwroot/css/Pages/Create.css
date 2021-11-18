@@ -1,0 +1,181 @@
+﻿
+body {
+    font-family: sahel;
+    direction:rtl;
+}
+
+/* Header */
+header {
+    height: 100px;
+    display: flex;
+    padding: 0px 30px;
+    align-items: center;
+    border-bottom:1px solid #17a2b8;
+    box-shadow:0px 0px 10px #acacac;
+    background-color:white;
+
+    position:sticky;
+    top:50px;
+    left:0px;
+}
+.write-btn{
+
+    font-size:13px;
+
+}
+/* End Header */
+
+/* Title */
+
+.title-input,
+.title-input:focus{
+    display:block;
+    outline:none;
+    border: 0;
+    font-size: 20px;
+    height: 50px;
+    width:100%
+    
+}
+
+@media (min-width:0px) {
+    .title-div {
+        width: 100%;
+        margin: 50px 0px 20px;
+        padding: 0px 30px;
+    }
+    .body-div {
+        width: 100%;
+        padding: 0px 30px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width:768px) {
+    .title-div {
+        width: 100%;
+        margin: 50px 0px 20px;
+        padding: 0px 50px;
+    }
+    .body-div {
+        width: 100%;
+        padding: 0px 50px;
+        margin-bottom: 40px;
+    }
+}
+#memory-form{
+    display:none;
+}
+/* End Title */
+/* Body */
+#img-btn {
+
+    border:1px solid #aaa;
+}
+#text-btn {
+    border: 1px solid #aaa;
+    margin-right: 10px;
+}
+
+textarea {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    font-size: 16px;
+    border: 0;
+    line-height:35px;
+    text-align:justify;
+    resize:none;
+    margin:20px 0px;
+}
+
+textarea:focus{
+    border: none;
+    outline: none;
+}
+
+/* Btns Service*/
+
+.services-div {
+    margin:40px 0px;
+}
+
+.services-div div{
+    width:60px;
+    height:30px;
+    
+}
+
+.file-input{
+    display:none;
+}
+
+.body-div .img-tag{
+    margin:0px auto;
+    width:60%;
+    display:block;
+    height:auto;
+}
+/* End Btns Service */
+/* End Body */
+
+
+/* Modal 1 */
+.modal-1 .modal-title {
+    font-size: 18px !important;
+    color: #ffc107;
+}
+.modal-1 .modal-body {
+    font-size: 14px;
+    color: #ae2330;
+}
+.modal-1 .modal li {
+    margin-top: 20px;
+}
+.modal-1 .modal-footer {
+    font-size: 12px;
+}
+/* End Modal 1 */
+.modal button{
+    font-size:15px;
+}
+/* Modal 2 */
+.modal-2 h5 {
+    font-size: 14px;
+    color: black;
+}
+
+.modal-2 .modal-body select,
+.modal-2 .modal-body input {
+
+    font-size: 13px;
+    color: black;
+}
+.modal-2 p {
+    font-size: 13px;
+    color: #17a2b8;
+}
+.modal-2 .inner-div{
+    padding:10px;
+    height:200px;
+}
+
+.modal-2 .modal-footer {
+ 
+}
+
+.modal-2 #close-btn-2 {
+    font-size:13px !important;
+}
+.modal-2 #send-post-btn {
+    font-size: 13px !important;
+}
+/* End Modal 2 */
+
+
+
+
+
+
+
+

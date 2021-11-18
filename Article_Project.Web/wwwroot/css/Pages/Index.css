@@ -1,0 +1,149 @@
+﻿
+body {
+    font-family: sahel;
+    background-color: #f8f9fa;
+    direction:rtl;
+}
+
+/* landing */
+.landing-div {
+    background: rgb(12,230,166);
+    background: linear-gradient(135deg, rgba(12,230,166,1) 0%, rgba(11,114,133,1) 100%);
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+
+h1{
+    font-size:29px;
+    font-weight:600;
+    width:90%;
+    line-height:50px;
+    margin:0px auto;
+    text-align:center;
+    color:white;
+    text-align:center;
+
+}
+
+.btn-search-div{
+    cursor:pointer;
+}
+
+.landing-div h2 {
+    margin-top: 40px;
+    font-size: 24px;
+    color: white;
+    text-align: center;
+}
+.landing-div h4 {
+    font-size: 13px;
+    color: white;
+    margin-top: 20px;
+}
+.landing-div .col-4 i{
+    
+    font-size:60px;
+    color:white;
+
+
+}
+
+@media (min-width:0px) {
+    .search-div {
+        width: 370px;
+        margin: 50px auto;
+        display: flex;
+        border-radius: 1px;
+        justify-content: center;
+    }
+    .input-group-span {
+        width: 60px;
+        background-color: #56cebb;
+        font-size: 25px;
+        color: white;
+        border-radius: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (min-width:576px) {
+    .search-div {
+        width: 450px;
+        margin: 50px auto;
+        display: flex;
+        border-radius: 1px;
+        justify-content: center;
+    }
+    .input-group-span {
+        width: 70px;
+        background-color: #56cebb;
+        font-size: 25px;
+        color: white;
+        border-radius: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (min-width:768px) {
+    .search-div {
+        width: 550px;
+        margin: 50px auto;
+        display: flex;
+        border-radius: 1px;
+        justify-content: center;
+    }
+    .input-group-span {
+        width: 75px;
+        background-color: #56cebb;
+        font-size: 25px;
+        color: white;
+        border-radius: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+.search-div #search-btn{
+    border-radius:1px;
+    height:45px;
+ 
+}
+
+.search-btn{
+    height:45px;
+}
+/* End landing */
+.title-posts-div {
+    font-size: 12px;
+}
+
+.title-posts-div h2{
+     font-size:14px;
+}
+
+.title-span {
+    background-color: #ffc107;
+    color:white;
+}
+.pagination-div{
+    margin-top:20px;
+    direction:ltr;
+    font-size:14px;
+}
+.not-div {
+    display: flex;
+    height: 70vh;
+}
+.not-h6 {
+    color: gray;
+    font-size: 14px;
+    margin: auto;
+    text-align: center;
+}
+/* Main */
+/* End Main */
+
+
+

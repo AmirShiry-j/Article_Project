@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Article_Project.Dtoes.Dto.AdminArea.Users.UserListDto>
+
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService _authorizeService
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>کاربران</h1>
+
+@if (_authorizeService.AuthorizeAsync(User, "AdminUsers").Result.Succeeded)
+{
+    <p>
+        <a asp-action="AddNewUser">اضافه کردن کاربر جدید</a>
+    </p>
+}
+
+<form asp-action="Index" method="get" class="d-flex">
+    <label>سرچ با نام کاربری</label>
+    <input class="form-control col-5" required name="Search" />
+    <input type="submit" class="btn btn-sm btn-success" value="Search" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameShow)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            @if (_authorizeService.AuthorizeAsync(User, "AdminUsers").Result.Succeeded)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Roles)
+                </th>
+            }
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameShow)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @if (_authorizeService.AuthorizeAsync(User, "AdminUsers").Result.Succeeded)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Roles)
+                    </td>
+                }
+
+                <td>
+
+                    @if (_authorizeService.AuthorizeAsync(User, "AdminUsers").Result.Succeeded)
+                    {
+
+                        @Html.ActionLink("Add Role", "AddUserRole", "Users", new { UserId = item.Id, area = "Admin" });@:|
+                        @Html.ActionLink("Roles", "RolesList", "Users", new { UserName = item.UserName, area = "Admin" }); @:|
+                        <a class="btn btn-outline-light border-warning" asp-controller="Users" asp-action="Details" asp-route-UserId="@item.Id">
+                            <i class="fa fa-tv text-warning"></i>
+                        </a>
+                    }
+                    else if (_authorizeService.AuthorizeAsync(User, "ManagerUsers").Result.Succeeded)
+                    {
+                        <a class="btn btn-outline-light border-warning" asp-controller="Users" asp-action="Details" asp-route-UserId="@item.Id">
+                            <i class="fa fa-tv text-warning"></i>
+                        </a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

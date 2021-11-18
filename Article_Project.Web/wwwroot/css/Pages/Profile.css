@@ -1,0 +1,209 @@
+﻿
+body {
+    font-family: sahel;
+    background-color: #f8f9fa;
+    direction:rtl;
+}
+
+/* Profile */
+.profile-div {
+    padding: 20px 25px 10px;
+    border-bottom:1px solid rgba(3, 255, 255, 0.21);
+    box-shadow:0px 5px 10px #d4d4d4; 
+}
+
+.profile-img-div{
+    width:100px;
+}
+.profile-img {
+    height: 100px;
+    width: 100px;
+}
+
+.count-post-h6, .count-follower-h6, .count-following-h6{
+    font-size:14px;
+}
+
+.follower-h5, .following-h5, .post-h5 {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.name-show-h3{
+    font-size:17px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.user-name-h4 {
+    font-size: 15px;
+    margin-top:8px;
+}
+
+.biography-p {
+    margin-top:5px;
+    font-size: 14px;
+    color: #444444;
+}
+
+.follow-btn {
+    height: 28px;
+    width: 115px;
+    font-size: 11px;
+    
+}
+
+.following-btn {
+    height: 28px;
+    width: 115px;
+    font-size: 11px;
+
+}
+.btns-mypro-div {
+    height: 40px;
+    overflow-x: auto;
+    white-space:nowrap;
+}
+.btns-mypro-div a {
+    font-size: 11px;
+    height: 28px;
+
+}
+
+.btns-mypro-div i {
+    font-size: 14px;
+    
+}
+/* End Profile */
+/* Posts */
+.posts-div {
+    font-family: vazir;
+    padding:0;
+}
+
+.outer-post-div{
+
+}
+
+.post-div {
+   
+   padding:10px;
+   border-radius:5px;
+   box-shadow:1px 1px 5px #aaa;
+}
+
+.post-div:hover{
+   box-shadow:1px 1px 8px #aaa;
+}
+
+.title-posts-div{
+    font-size:14px;
+}
+
+/* Header */
+.header-div section{
+    padding:0px;
+}
+.header-div .text-div{
+    padding-right:7px;
+    margin:0;
+}
+.header-div .author-img-div img {
+    height: 45px;
+    width: 45px;
+}
+.header-div .name-show-h5 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #444444;
+}
+.header-div .time-post-h6 {
+    font-size: 10px;
+    color: #8f8f8f;
+}
+.header-div .subject-div {
+    padding: 5px 5px;
+}
+.header-div .subject-h6 {
+    font-size: 11px;
+}
+/* End Header*/
+
+/* Body */
+.body-div {
+    padding-top:15px;
+    padding-bottom:10px;
+}
+.body-div .title-div{
+    padding:0px 5px;
+    
+}
+.body-div .title-h2{
+    font-size:18px;
+    font-weight:bold;
+    color:#363636;
+    line-height:30px;
+    height:30px;
+    width:85%;
+}
+.body-div .post-img-div{
+    margin-top:20px;
+    width:100%;
+}
+.body-div .post-img {
+    width: 98%;
+    height: 200px;
+    display:block;
+    margin:0px auto;
+}
+.body-div .text-div{
+    margin:20px 5px;
+    line-height:20px;
+    height:20px;
+    width:85%;
+
+}
+.body-div .text-p{
+
+    font-size:16px;
+    color:#363636;
+
+}
+
+.not-div {
+    display: flex;
+    height: 50vh;
+}
+
+.not-h6 {
+    color: gray;
+    font-size: 14px;
+    margin: auto;
+    text-align: center;
+}
+
+
+
+/* End Body */
+
+/* Footer */
+.footer-div {
+    
+}
+.footer-div i{
+    font-size:18px;
+     color:#444;
+}
+.footer-div .count-like-span{
+    font-size:13px;
+}
+.footer-div .like-div, .footer-div .bookmark-div {
+    cursor: pointer;
+}
+
+/* End Footer */
+
+/* End Posts */
+

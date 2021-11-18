@@ -1,0 +1,133 @@
+﻿@inject UserManager<User> _userManager
+@inject IUnitOfWork _unitOfWork
+
+@model List<ShortDisplayPostDto>
+
+@{
+    Layout = null;
+    List<ShortDisplayPostDto> posts = Model;
+
+    ServicePost servicePost = new ServicePost(_unitOfWork);
+
+}
+
+<div class="Posts-div d-flex flex-wrap justify-content-sm-center justify-content-md-start ">
+
+    @{
+
+        foreach (var shortPost in posts)
+        {
+            User author = _unitOfWork.UserRepository.GetByIdAsync(shortPost.UserId).Result;
+
+            <div class="outer-post-div my-4 col-sm-11 col-md-6 px-md-2">
+
+                <div class="post-div">
+                    @* Header Post *@
+                    <div class="header-div d-flex">
+                        <section class="col-7 d-flex">
+                            <div class="author-img-div">
+                                <a asp-controller="User" asp-action="Profile" asp-route-UserName="@author.UserName" class="text-reset text-decoration-none">
+                                    @if (author.ImageProfileName != null)
+                                    {
+                                        <img class="rounded-circle" src="~/images/ImgProfile/@author.ImageProfileName" alt="@author.NameShow" />
+                                    }
+                                    else
+                                    {
+                                        <img class="rounded-circle" src="~/images/Userimg.png" />
+
+                                    }
+                                </a>
+                            </div>
+                            <div class="text-div">
+                                <a asp-controller="User" asp-action="Profile" asp-route-UserName="@author.UserName" class="text-reset text-decoration-none">
+                                    <h5 class="name-show-h5">@author.NameShow</h5>
+                                </a>
+                                <h6 class="time-post-h6">@servicePost.GetCurrentTime(shortPost.TimeCreate)</h6>
+                            </div>
+                        </section>
+                        <section class="col-5 text-left">
+                            <div class="subject-div d-flex justify-content-end">
+                                <a asp-controller="Post" asp-action="Subject" asp-route-Subject="@shortPost.Subject" class="text-reset text-decoration-none">
+                                    <h6 class="subject-h6">@shortPost.Subject</h6>
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+                    @* End Header Post *@
+                    @* Body Post *@
+                    <div class="body-div">
+                        <a asp-controller="Post" asp-action="Show" asp-route-PostId="@shortPost.PostId" class="text-reset text-decoration-none">
+                            <div class="title-div">
+                                <h2 class="title-h2 text-truncate">@shortPost.Title</h2>
+                            </div>
+                        </a>
+
+                        <a asp-controller="Post" asp-action="Show" asp-route-PostId="@shortPost.PostId" class="text-reset text-decoration-none">
+                            <div class="post-img-div">
+                                <img class="post-img" src="~/images/ImgPost/@shortPost.ImageName" alt="@shortPost.Title" />
+                            </div>
+                        </a>
+
+                        <div class="text-div ">
+                            <p class="text-p text-truncate">@shortPost.Description</p>
+                        </div>
+                    </div>
+                    @* End Body Post *@
+                    @* Footer Post *@
+                    <div class="footer-div d-flex justify-content-between px-3">
+                        <div class="like-div" PostId="@shortPost.PostId">
+                            @{
+                                List<Like> likes = _unitOfWork.LikeRepository.GetAllAsync(l => l.PostId == shortPost.PostId,null).Result.ToList();
+                                int count = likes.Count;
+
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    User user = _userManager.GetUserAsync(User).Result;
+                                    if (likes.Where(l => l.PostId == shortPost.PostId && l.UserId == user.Id).Any())
+                                    {
+                                        <i class="fa fa-heart text-danger"></i> <span class="count-like-span">@count</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-heart-o"></i> <span class="count-like-span">@count</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <i class="fa fa-heart-o"></i> <span class="count-like-span">@count</span>
+
+                                }
+                            }
+                        </div>
+
+                        <div class="bookmark-div" PostId="@shortPost.PostId">
+                            @{
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    User user = _userManager.GetUserAsync(User).Result;
+                                    if (_unitOfWork.BookmarkRepository.GetAllAsync(m => m.UserId == user.Id && m.PostId == shortPost.PostId).Result.Any())
+                                    {
+                                        <i class="fa fa-bookmark"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-bookmark-o"></i>
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    <i class="fa fa-bookmark-o"></i>
+                                }
+                            }
+                        </div>
+                    </div>
+                    @* End Footer Post *@
+
+                </div>
+
+            </div>
+        }
+    }
+</div>
