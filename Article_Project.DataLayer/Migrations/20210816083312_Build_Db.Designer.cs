@@ -4,14 +4,16 @@ using Article_Project.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Article_Project.DataLayer.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210816083312_Build_Db")]
+    partial class Build_Db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +36,6 @@ namespace Article_Project.DataLayer.Migrations
 
                     b.HasKey("BookmarkId");
 
-                    b.HasIndex("PostId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Bookmarks");
@@ -51,7 +51,7 @@ namespace Article_Project.DataLayer.Migrations
                     b.Property<long>("PostId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("ReplyComment")
+                    b.Property<long>("ReplyComment")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Text")
@@ -62,15 +62,12 @@ namespace Article_Project.DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CommentId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("ReplyComment");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -84,14 +81,12 @@ namespace Article_Project.DataLayer.Migrations
 
                     b.Property<string>("FollowTo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("FollowId");
-
-                    b.HasIndex("FollowTo");
 
                     b.HasIndex("UserId");
 
@@ -109,13 +104,12 @@ namespace Article_Project.DataLayer.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LikeId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Likes");
                 });
@@ -383,17 +377,9 @@ namespace Article_Project.DataLayer.Migrations
 
             modelBuilder.Entity("Article_Project.Entities.Entity.Bookmark", b =>
                 {
-                    b.HasOne("Article_Project.Entities.Entity.Post", "Post")
-                        .WithMany("Bookmarks")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Article_Project.Entities.Entity.User", "User")
                         .WithMany("Bookmarks")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
@@ -406,34 +392,16 @@ namespace Article_Project.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Article_Project.Entities.Entity.Comment", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("ReplyComment");
-
-                    b.HasOne("Article_Project.Entities.Entity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Post");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Article_Project.Entities.Entity.Follow", b =>
                 {
-                    b.HasOne("Article_Project.Entities.Entity.User", "UserTo")
-                        .WithMany("Followers")
-                        .HasForeignKey("FollowTo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Article_Project.Entities.Entity.User", "User")
-                        .WithMany("Followings")
+                        .WithMany("Follows")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-
-                    b.Navigation("UserTo");
                 });
 
             modelBuilder.Entity("Article_Project.Entities.Entity.Like", b =>
@@ -444,13 +412,7 @@ namespace Article_Project.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Article_Project.Entities.Entity.User", "User")
-                        .WithMany("Likes")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Post");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Article_Project.Entities.Entity.Post", b =>
@@ -513,15 +475,8 @@ namespace Article_Project.DataLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Article_Project.Entities.Entity.Comment", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
             modelBuilder.Entity("Article_Project.Entities.Entity.Post", b =>
                 {
-                    b.Navigation("Bookmarks");
-
                     b.Navigation("Comments");
 
                     b.Navigation("Likes");
@@ -531,11 +486,7 @@ namespace Article_Project.DataLayer.Migrations
                 {
                     b.Navigation("Bookmarks");
 
-                    b.Navigation("Followers");
-
-                    b.Navigation("Followings");
-
-                    b.Navigation("Likes");
+                    b.Navigation("Follows");
 
                     b.Navigation("Posts");
                 });

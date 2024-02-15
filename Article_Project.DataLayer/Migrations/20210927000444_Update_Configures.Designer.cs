@@ -4,14 +4,16 @@ using Article_Project.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Article_Project.DataLayer.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210927000444_Update_Configures")]
+    partial class Update_Configures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace Article_Project.DataLayer.Migrations
                     b.Property<long>("PostId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("ReplyComment")
+                    b.Property<long>("ReplyComment")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Text")
@@ -67,8 +69,6 @@ namespace Article_Project.DataLayer.Migrations
                     b.HasKey("CommentId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("ReplyComment");
 
                     b.HasIndex("UserId");
 
@@ -144,7 +144,8 @@ namespace Article_Project.DataLayer.Migrations
 
                     b.Property<string>("Texts")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("TimeCreate")
                         .HasColumnType("datetime2");
@@ -406,10 +407,6 @@ namespace Article_Project.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Article_Project.Entities.Entity.Comment", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("ReplyComment");
-
                     b.HasOne("Article_Project.Entities.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -511,11 +508,6 @@ namespace Article_Project.DataLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Article_Project.Entities.Entity.Comment", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Article_Project.Entities.Entity.Post", b =>
