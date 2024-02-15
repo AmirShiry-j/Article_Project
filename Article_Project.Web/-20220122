@@ -1,0 +1,100 @@
+2022-01-22T10:17:24.7528828-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:17:26.8953775-08:00  [INF] Executed DbCommand ("54"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:17:28.0563951-08:00  [INF] Executed DbCommand ("1,140"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:17:28.0641713-08:00  [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:17:28.0658495-08:00  [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:17:28.5892842-08:00  [INF] Executed DbCommand ("495"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];" (0723d8ff)
+2022-01-22T10:17:28.6630377-08:00  [INF] No migrations were applied. The database is already up to date. (503cba9d)
+2022-01-22T10:18:35.5652056-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:18:36.2886620-08:00  [INF] Executed DbCommand ("38"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:18:36.3461655-08:00  [INF] Executed DbCommand ("37"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:18:36.3529825-08:00  [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:18:36.3542969-08:00  [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:18:36.3856215-08:00  [INF] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];" (0723d8ff)
+2022-01-22T10:18:36.4151703-08:00  [INF] Applying migration '"20210816083312_Build_Db"'. (0e2ac64d)
+2022-01-22T10:18:37.2384115-08:00  [ERR] Failed executing DbCommand ("525"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);" (627a98df)
+2022-01-22T10:29:38.8301633-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:30:32.8130958-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:30:36.0717984-08:00  [INF] Executed DbCommand ("40"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:30:36.2679496-08:00  [INF] Executed DbCommand ("161"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:30:36.3148321-08:00  [INF] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];" (0723d8ff)
+2022-01-22T10:31:33.3205869-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:32:10.9721949-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:32:12.0950285-08:00  [INF] Executed DbCommand ("36"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:32:12.1556532-08:00  [INF] Executed DbCommand ("40"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:32:12.1766683-08:00  [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];" (0723d8ff)
+2022-01-22T10:42:10.2970528-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:43:32.5586435-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:43:43.5712556-08:00  [INF] Executed DbCommand ("215"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:43:43.8652755-08:00  [INF] Executed DbCommand ("110"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:43:44.0648816-08:00  [INF] Executed DbCommand ("84"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];" (0723d8ff)
+2022-01-22T10:58:08.1488469-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:58:44.9970971-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T10:58:47.3247117-08:00  [INF] Executed DbCommand ("104"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:58:47.5687099-08:00  [INF] Executed DbCommand ("209"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:58:47.5784000-08:00  [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T10:58:47.5792740-08:00  [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T10:58:47.5976628-08:00  [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];" (0723d8ff)
+2022-01-22T10:58:47.6402781-08:00  [INF] Applying migration '"20210816083312_Build_Db"'. (0e2ac64d)
+2022-01-22T10:58:47.9860054-08:00  [ERR] Failed executing DbCommand ("32"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);" (627a98df)
+2022-01-22T23:39:19.7991885-08:00  [INF] Entity Framework Core "5.0.8" initialized '"DataBaseContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2022-01-22T23:39:22.0541007-08:00  [INF] Executed DbCommand ("51"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2022-01-22T23:39:22.2301163-08:00  [INF] Executed DbCommand ("158"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');" (0723d8ff)
+2022-01-22T23:39:22.3414459-08:00  [INF] Executed DbCommand ("61"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];" (0723d8ff)

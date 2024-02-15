@@ -45,7 +45,7 @@
                     url: "/Account/DeleteImageProfile",
                     method: "get"
                 }).done(function (res) {
-                    if (res) {
+                    if (res==true) {
 
                         Swal.fire(
                             'Deleted!',

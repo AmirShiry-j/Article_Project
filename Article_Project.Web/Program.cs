@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,8 @@ namespace Article_Project.Web
                     webBuilder.ConfigureLogging(logger =>
                     {
                         logger.ClearProviders();
-                        logger.AddConsole();
-                        logger.AddDebug();
-                        logger.AddEventLog();
-                        logger.AddFile("");
-                    });
+                    })
+                    .UseNLog();
                 });
     }
 }
