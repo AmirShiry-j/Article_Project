@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,9 +21,12 @@ namespace Article_Project.Web.Tools
     public class ServiceAccount : IServiceAccount
     {
         private readonly IConfiguration _configuration;
-        public ServiceAccount(IConfiguration configuration)
+        private readonly ILogger<ServiceAccount> _logger;
+        public ServiceAccount(IConfiguration configuration,
+            ILogger<ServiceAccount> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
         public void DeleteImageProfile(string ImageProfileName)
         {
@@ -40,27 +44,35 @@ namespace Article_Project.Web.Tools
 
             //https://mail.google.com/mail/u/0/?tab=km#inbox
 
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            client.Timeout = 1000000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
+            try
+            {
+                SmtpClient client = new SmtpClient();
+                client.Port = 587;
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                client.Timeout = 60000;
+                client.UseDefaultCredentials = false;
 
-            //Use Secrets Manager for Values
-            string myEmail = _configuration["Email"];
-            string myPassword = _configuration["Password"];
+                //Use Secrets Manager for Values
+                string myEmail = "PazelShop09@gmail.com";
+                string myPassword = "mkzsra5943";
 
-            client.Credentials = new NetworkCredential(myEmail, myPassword);
-            MailMessage message = new MailMessage(myEmail, UserEmail, Subject, Body);
-            message.IsBodyHtml = true;
-            message.BodyEncoding = UTF8Encoding.UTF8;
-            message.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess;
-            client.Send(message);
+                client.Credentials = new NetworkCredential(myEmail, myPassword);
+                MailMessage message = new MailMessage(myEmail, UserEmail, Subject, Body);
+                message.IsBodyHtml = true;
+                message.BodyEncoding = UTF8Encoding.UTF8;
+                message.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess;
+                client.Send(message);
 
+                return Task.CompletedTask;
 
-            return Task.CompletedTask;
+            }
+            catch (Exception exe)
+            {
+                _logger.LogError(exe.ToString());
+
+                return Task.CompletedTask;
+            }
         }
     }
 }

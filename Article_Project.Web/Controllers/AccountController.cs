@@ -224,20 +224,19 @@ namespace Article_Project.Web.Controllers
                 infoEditUser.NameImageProfile = newNameImage;
             }
 
-            var user = _userManager.GetUserAsync(User).Result;
 
-            user.UserName = infoEditUser.UserName;
-            user.NameShow = infoEditUser.NameShow;
-            //user.Email = infoEditUser.Email;
-            user.MobilePhone = infoEditUser.MobilePhone;
-            user.Biography = infoEditUser.Biography;
-            user.TwoFactorEnabled = infoEditUser.TwoFactor;
+            userForUpdateImgProfile.UserName = infoEditUser.UserName;
+            userForUpdateImgProfile.NameShow = infoEditUser.NameShow;
+            //userForUpdateImgProfile.Email = infoEditUser.Email;
+            userForUpdateImgProfile.MobilePhone = infoEditUser.MobilePhone;
+            userForUpdateImgProfile.Biography = infoEditUser.Biography;
+            userForUpdateImgProfile.TwoFactorEnabled = infoEditUser.TwoFactor;
 
-            var result = _userManager.UpdateAsync(user).Result;
+            var result = _userManager.UpdateAsync(userForUpdateImgProfile).Result;
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Profile", "User", new { user.UserName });
+                return RedirectToAction("Profile", "User", new { userForUpdateImgProfile.UserName });
             }
             else
             {
@@ -257,7 +256,12 @@ namespace Article_Project.Web.Controllers
         {
             User user = _userManager.GetUserAsync(User).Result;
 
-            if (user?.ImageProfileName != null)
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (user.ImageProfileName != null)
             {
                 _serviceAccount.DeleteImageProfile(user.ImageProfileName);
 

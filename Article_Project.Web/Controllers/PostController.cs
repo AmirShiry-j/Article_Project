@@ -20,6 +20,7 @@ namespace Article_Project.Web.Controllers
     public class PostController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
+        private readonly IServiceAccount _serviceAccount;
         private readonly UserManager<User> _userManager;
 
 
@@ -29,7 +30,11 @@ namespace Article_Project.Web.Controllers
 
         private readonly ILogger<PostController> _logger;
         private readonly IUnitOfWork _unitOfWork;
-        public PostController(UserManager<User> userManager, IAuthorizationService authorizationService, IUnitOfWork unitOfWork, ILogger<PostController> logger)
+        public PostController(UserManager<User> userManager,
+            IAuthorizationService authorizationService,
+            IUnitOfWork unitOfWork,
+            ILogger<PostController> logger, 
+            IServiceAccount serviceAccount)
         {
             _userManager = userManager;
 
@@ -42,6 +47,7 @@ namespace Article_Project.Web.Controllers
 
 
             _unitOfWork = unitOfWork;
+            _serviceAccount = serviceAccount;
         }
         
         
@@ -193,7 +199,7 @@ namespace Article_Project.Web.Controllers
 
             Post post = _unitOfWork.PostRepository.GetByIdAsync(PostId).Result;
 
-            if (post == null || user == null)
+            if (post == null)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -233,73 +239,90 @@ namespace Article_Project.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreadPostDto creadPost, IFormFile[] formFiles)
         {
-            var userActive = _userManager.FindByNameAsync(User.Identity.Name).Result;
-
-            if (userActive == null)
-
+            try
             {
-                return RedirectToAction("Error", "Home");
+                var userActive = _userManager.FindByNameAsync(User.Identity.Name).Result;
 
-            }
-            if (ModelState.IsValid && formFiles.Length > 0)
-            {
-                string ImgNames = "";
+                if (userActive == null)
 
-                foreach (var file in formFiles)
                 {
-                    string ImgName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    ImgNames += ImgName;
-                    ImgNames += "#*$";
+                    return RedirectToAction("Error", "Home");
 
-                    string savePath = Path.Combine(
-                            Directory.GetCurrentDirectory(), "wwwroot/Images/ImgPost/", ImgName);
-
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
                 }
-
-                string[] ArryNotCorrectTexts = _servicePost.GetArryOfString(creadPost.Texts);
-                string[] ArryNotCorrectOrders = _servicePost.GetArryOfString(creadPost.Orders);
-                string[] ArryOrders = _servicePost.GetCorrectOrders(ArryNotCorrectOrders, ArryNotCorrectTexts);
-                string[] ArryImgs = ImgNames.Split("#*$", StringSplitOptions.RemoveEmptyEntries);
-                string[] ArryTexts = creadPost.Texts.Split("#*$", StringSplitOptions.RemoveEmptyEntries);
-
-
-                Post post = new Post();
-                post.Title = creadPost.Title;
-                post.Tags = creadPost.Tags;
-                post.Texts = string.Join("#*$", ArryTexts);
-                post.ImageNames = string.Join("#*$", ArryImgs);
-                post.Subject = _servicePost.GetSubject(creadPost.Subject);
-                post.Orders = string.Join("#*$", ArryOrders);
-                post.TimeCreate = DateTime.Now;
-                post.UserId = userActive.Id;
-
-
-                if (_unitOfWork.PostRepository.AddAsync(post).Result)
+                if (ModelState.IsValid && formFiles.Length > 0)
                 {
-                    return RedirectToRoute(new { controller = "Post", action = "Show", PostId = post.PostId });
+                    string ImgNames = "";
 
+                    foreach (var file in formFiles)
+                    {
+                        string ImgName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        ImgNames += ImgName;
+                        ImgNames += "#*$";
+
+                        string savePath = Path.Combine(
+                                Directory.GetCurrentDirectory(), "wwwroot/Images/ImgPost/", ImgName);
+
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                    }
+
+                    string[] ArryNotCorrectTexts = _servicePost.GetArryOfString(creadPost.Texts);
+                    string[] ArryNotCorrectOrders = _servicePost.GetArryOfString(creadPost.Orders);
+                    string[] ArryOrders = _servicePost.GetCorrectOrders(ArryNotCorrectOrders, ArryNotCorrectTexts);
+                    string[] ArryImgs = ImgNames.Split("#*$", StringSplitOptions.RemoveEmptyEntries);
+                    string[] ArryTexts = creadPost.Texts.Split("#*$", StringSplitOptions.RemoveEmptyEntries);
+
+
+                    Post post = new Post();
+                    post.Title = creadPost.Title;
+                    post.Tags = creadPost.Tags;
+                    post.Texts = string.Join("#*$", ArryTexts);
+                    post.ImageNames = string.Join("#*$", ArryImgs);
+                    post.Subject = _servicePost.GetSubject(creadPost.Subject);
+                    post.Orders = string.Join("#*$", ArryOrders);
+                    post.TimeCreate = DateTime.Now;
+                    post.UserId = userActive.Id;
+
+
+                    if (_unitOfWork.PostRepository.AddAsync(post).Result)
+                    {
+                        return RedirectToRoute(new { controller = "Post", action = "Show", PostId = post.PostId });
+
+                    }
+                    else
+                    {
+
+                        string[] ImgNamesForDelete = ImgNames.Split("#*$");
+
+                        foreach (var NameDelete in ImgNamesForDelete)
+                        {
+                            _servicePost.DeleteImagePost(NameDelete);
+                        }
+
+                        await _serviceAccount.SendEmail("AmirShiry06@gmail.com", "کلا نرف تو دیتابیس خط 298", "اکشن ایجاد مقاله");
+                        _logger.LogError("کلا نرف تو دیتابیس خط 298");
+
+                        return RedirectToRoute(new { controller = "Home", action = "Error" });
+                    }
                 }
                 else
                 {
-
-                    string[] ImgNamesForDelete = ImgNames.Split("#*$");
-
-                    foreach (var NameDelete in ImgNamesForDelete)
-                    {
-                        _servicePost.DeleteImagePost(NameDelete);
-                    }
+                    await _serviceAccount.SendEmail("AmirShiry06@gmail.com", "مقدارای ارسالی ولید نبوده و یا شاید تصویری ارسال نشده", "اکشن ایجاد مقاله");
+                    _logger.LogError("مقدارای ارسالی ولید نبوده و یا شاید تصویری ارسال نشده");
 
                     return RedirectToRoute(new { controller = "Home", action = "Error" });
                 }
             }
-            else
+            catch(Exception error)
             {
-                return RedirectToRoute(new { controller = "Home", action = "Error" });
+                await _serviceAccount.SendEmail("AmirShiry06@gmail.com", error.ToString(), "اکشن ایجاد مقاله");
+                _logger.LogError(error.ToString());
+
+                return RedirectToAction("Error", "Home");
             }
+
         }       
     }
 }

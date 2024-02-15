@@ -5,6 +5,7 @@ using Article_Project.Services.Repositories.UnitOfWorkRepository.Interface;
 using Article_Project.Services.Repositories.UnitOfWorkRepository.Service;
 using Article_Project.Web.Tools;
 using Article_Project.Web.Tools.Policy;
+using ExceptionHandling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,6 +54,8 @@ namespace Article_Project.Web
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            services.AddTransient<HandlerOptions>();
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -79,7 +82,7 @@ namespace Article_Project.Web
 
                 option.LoginPath = "/Account/Login";
                 option.AccessDeniedPath = "/Account/Login";
-                option.ExpireTimeSpan = TimeSpan.FromDays(7);
+                option.ExpireTimeSpan = TimeSpan.FromDays(14);
                 option.SlidingExpiration = true;
 
             });
@@ -108,10 +111,8 @@ namespace Article_Project.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var path = Directory.GetCurrentDirectory();
-            loggerFactory.AddFile($"{path}\\wwwroot\\Logs\\Log.txt");
 
             if (env.IsDevelopment())
             {
@@ -123,6 +124,9 @@ namespace Article_Project.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
