@@ -54,8 +54,8 @@ namespace Article_Project.Web.Tools
                 client.UseDefaultCredentials = false;
 
                 //Use Secrets Manager for Values
-                string myEmail = "PazelShop09@gmail.com";
-                string myPassword = "mkzsra5943";
+                string myEmail = "AmirShiryMessager@gmail.com";
+                string myPassword = "@ab/12345";
 
                 client.Credentials = new NetworkCredential(myEmail, myPassword);
                 MailMessage message = new MailMessage(myEmail, UserEmail, Subject, Body);
