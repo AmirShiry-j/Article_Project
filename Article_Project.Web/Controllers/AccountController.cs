@@ -57,20 +57,23 @@ namespace Article_Project.Web.Controllers
             {
                 UserName = registerUser.UserName,
                 Email = registerUser.Email,
-                NameShow = registerUser.NameShow
-
+                NameShow = registerUser.NameShow,
+                EmailConfirmed = true
             };
 
             var result = _userManager.CreateAsync(newUser, registerUser.Password).Result;
 
             if (result.Succeeded)
             {
+                ////Confirm Email
+                //TempData["Email"] = newUser.Email;
+                //return RedirectToAction("ConfirmEmail");
 
-                TempData["Email"] = newUser.Email;
-
-                return RedirectToAction("ConfirmEmail");
-
-                //return RedirectToAction("Login", "Account");
+                var resultLogin = _signInManager.PasswordSignInAsync(newUser, registerUser.Password, true, true).Result;
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
