@@ -73,9 +73,9 @@ namespace Article_Project.Web
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
 
 
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
             });
 
             services.ConfigureApplicationCookie(option =>
