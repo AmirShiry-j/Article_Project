@@ -51,6 +51,7 @@ namespace Article_Project.Web
                 .AddRoles<Role>()
                 .AddErrorDescriber<PersianIdentityErrors>();
 
+            services.Configure<EmailSetting>(Configuration.GetSection("EmailSetting"));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 

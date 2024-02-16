@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,12 +21,12 @@ namespace Article_Project.Web.Tools
     }
     public class ServiceAccount : IServiceAccount
     {
-        private readonly IConfiguration _configuration;
+        private readonly IOptions<EmailSetting> _emailSetting;
         private readonly ILogger<ServiceAccount> _logger;
-        public ServiceAccount(IConfiguration configuration,
+        public ServiceAccount(IOptions<EmailSetting> emailSetting,
             ILogger<ServiceAccount> logger)
         {
-            _configuration = configuration;
+            _emailSetting = emailSetting;
             _logger = logger;
         }
         public void DeleteImageProfile(string ImageProfileName)
@@ -47,15 +48,15 @@ namespace Article_Project.Web.Tools
             try
             {
                 SmtpClient client = new SmtpClient();
-                client.Port = 587;
-                client.Host = "smtp.gmail.com";
-                client.EnableSsl = true;
-                client.Timeout = 60000;
-                client.UseDefaultCredentials = false;
+                client.Port = _emailSetting.Value.Port;
+                client.Host = _emailSetting.Value.Host;
+                client.EnableSsl = _emailSetting.Value.EnableSsl;
+                client.Timeout = _emailSetting.Value.Timeout;
+                client.UseDefaultCredentials = _emailSetting.Value.UseDefaultCredentials;
 
                 //Use Secrets Manager for Values
-                string myEmail = "AmirShiryMessager@gmail.com";
-                string myPassword = "@ab/12345";
+                string myEmail = _emailSetting.Value.Email;
+                string myPassword = _emailSetting.Value.Password;
 
                 client.Credentials = new NetworkCredential(myEmail, myPassword);
                 MailMessage message = new MailMessage(myEmail, UserEmail, Subject, Body);
