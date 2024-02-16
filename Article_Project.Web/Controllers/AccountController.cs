@@ -70,9 +70,13 @@ namespace Article_Project.Web.Controllers
                 //return RedirectToAction("ConfirmEmail");
 
                 var resultLogin = _signInManager.PasswordSignInAsync(newUser, registerUser.Password, true, true).Result;
-                if (result.Succeeded)
+                if (resultLogin.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Error", "Home");
                 }
             }
             else
